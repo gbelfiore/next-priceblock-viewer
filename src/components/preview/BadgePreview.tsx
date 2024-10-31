@@ -1,8 +1,8 @@
 import type { CSSProperties } from 'react';
 import { useMemo } from 'react';
 import { isEmpty } from 'lodash-es';
-import { usePriceBlockStore } from '@/zustand/price-block-store';
 import { IGenericPreviewProps } from '../types';
+import { usePriceBlockStore } from '../../zustand/price-block-store';
 
 function BadgePreview({ priceBlockKey, priceBlockElementKey }: IGenericPreviewProps) {
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);

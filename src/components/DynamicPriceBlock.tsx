@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import Elements from './Elements';
 import { PriceBlockStoreStateItem, usePriceBlockStore } from '../zustand/price-block-store';
-import { PriceBlock } from '@/types/price-block';
+import { PriceBlock } from '../types/price-block';
 
 interface DynamicPriceBlockProps {
   priceBlock: PriceBlock;

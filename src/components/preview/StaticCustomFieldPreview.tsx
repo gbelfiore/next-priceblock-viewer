@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import useBoxStyle from '../../hooks/useBoxStyle';
 import useFontStyle from '../../hooks/useFontStyle';
 import classNames from 'classnames';
-import { usePriceBlockStore } from '@/zustand/price-block-store';
+import { usePriceBlockStore } from '../../zustand/price-block-store';
 
 const StaticCustomFieldPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPreviewProps) => {
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);

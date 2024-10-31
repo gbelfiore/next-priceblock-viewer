@@ -1,13 +1,13 @@
 import { useMemo, CSSProperties, FC } from 'react';
 import { DynamicPriceBlockElementKey, IGenericPreviewProps, PriceBlockElementKey } from './types';
 import FullPricePreview from './preview/FullPricePreview';
-import { usePriceBlockStore } from '@/zustand/price-block-store';
 import BadgePreview from './preview/BadgePreview';
 import CustomFieldPreview from './preview/CustomFieldPreview';
 import DiscountedPreview from './preview/DiscountedPreview';
 import DiscountPreview from './preview/DiscountPreview';
 import UnitTypePreview from './preview/UnitTypePreview';
 import StaticCustomFieldPreview from './preview/StaticCustomFieldPreview';
+import { usePriceBlockStore } from '../zustand/price-block-store';
 
 const customFieldIndex = 100;
 

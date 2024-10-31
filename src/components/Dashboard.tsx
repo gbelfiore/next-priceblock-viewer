@@ -1,13 +1,14 @@
 import '../index.css';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
 import DynamicPriceBlock from './DynamicPriceBlock';
-import { PriceBlock } from '@/types/price-block';
 import { useState } from 'react';
 import { Skeleton } from './ui/skeleton';
 import { Button } from './ui/button';
+import { Label } from '@radix-ui/react-label';
+import { PriceBlock } from '../types/price-block';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { Input } from './ui/input';
+import { Badge } from './ui/badge';
 
 const enviroments = [
   {

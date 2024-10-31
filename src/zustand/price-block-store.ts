@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PriceBlock } from '@/types/price-block';
 import { create } from 'zustand';
-import { getExtraFonts } from '@/utils/FontUitls';
+import { getExtraFonts } from '../utils/FontUitls';
+import { PriceBlock } from '../types/price-block';
 
 interface PriceBlockStoreStateItemValue {
   discount?: string;

@@ -1,6 +1,6 @@
 import { PriceBlockElementKey } from './types';
-import { usePriceBlockStore } from '@/zustand/price-block-store';
 import Item from './Item';
+import { usePriceBlockStore } from '../zustand/price-block-store';
 
 interface ElementsProps {
   priceBlockKey: string;

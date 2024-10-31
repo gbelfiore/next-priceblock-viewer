@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@/components": ["./src/components/*"],
-      "@/utils": ["./src/utils/*"],
-      "@/zustand": ["./src/zustand/*"],
-      "@/types": ["./src/types/*"]
-    },
+    // "paths": {
+    //   "@/*": ["./src/*"],
+    //   "@/components": ["./src/components/*"],
+    //   "@/utils": ["./src/utils/*"],
+    //   "@/zustand": ["./src/zustand/*"],
+    //   "@/types": ["./src/types/*"]
+    // },
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
