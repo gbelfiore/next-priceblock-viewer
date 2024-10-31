@@ -16,8 +16,6 @@ const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevi
   const boxStyle = useBoxStyle({ gridSize, box: properties?.box });
   const fontStyle = useFontStyle({ gridSize, font: properties?.font });
 
-  console.log('aaa', properties?.box.color);
-
   const fullPrice = valuePriceBLock.fullPrice;
 
   const getStyle = useMemo((): CSSProperties => {
