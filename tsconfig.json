@@ -1,45 +1,8 @@
-/* {
-  "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "noEmitOnError": false,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
-
-    "moduleResolution": "Node",
-    "allowImportingTsExtensions": true,
-    //"resolveJsonModule": true,
-    "isolatedModules": true,
-    "typeRoots": ["./dist/index.d.ts"],
-    "noEmit": true,
-    "declaration": true,
-    "jsx": "react-jsx",
-
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": ["src", "./index.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }]
-}
-
- */
-
 {
   "compilerOptions": {
     "target": "ESNext",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -57,7 +20,7 @@
     "typeRoots": ["./dist/index.d.ts", "node_modules/@types"],
     "noEmit": true,
     "jsx": "react-jsx",
-    "allowImportingTsExtensions": true,
+    "allowImportingTsExtensions": true
   },
   "include": ["src", "./index.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
