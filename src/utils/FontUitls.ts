@@ -1,5 +1,5 @@
-const addCssToDocument = (elementKey: string, cssText: string) => {
-  const key = `price-block-webfont-${elementKey}`;
+const addCssToDocument = (_id: string, cssText: string) => {
+  const key = `price-block-webfont-${_id}`;
   const currentExtraFonts = document.querySelector(`[data-type='${key}']`);
   if (!currentExtraFonts) {
     const styleElement = document.createElement('style');
@@ -69,13 +69,13 @@ function fontFaceCssToJson(css: string): FontFace[] {
   return fontFaces;
 }
 
-const getExtraFonts = async (elementKey: string, url: string) => {
+const getExtraFonts = async (_id: string, url: string) => {
   const res = await fetch(url);
   const cssText = await res.text();
   // console.log(cssText);
   // const cssJson = cssToJson(cssText);
   const cssJson = fontFaceCssToJson(cssText);
-  addCssToDocument(elementKey, cssText);
+  addCssToDocument(_id, cssText);
   return cssJson;
 };
 
