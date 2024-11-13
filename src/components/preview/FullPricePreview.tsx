@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import { useMemo } from 'react';
 import classNames from 'classnames';
-import { IGenericPreviewProps } from '../types';
+import { IFullPriceProperties, IGenericPreviewProps, IPriceBlockElement } from '../types';
 import SeparateNumberFormatted from '../separate-number-formatted/SeparateNumberFormatted';
 import useBoxStyle from '../../hooks/useBoxStyle';
 import useFontStyle from '../../hooks/useFontStyle';
@@ -12,7 +12,7 @@ const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevi
   const gridSize = priceBlockComp?.gridSize;
   const { priceBlock, valuePriceBLock } = priceBlockComp;
   const { settings } = priceBlock.jsonConf;
-  const { properties } = priceBlock.jsonConf.priceBlockElements[priceBlockElementKey];
+  const { properties } = priceBlock.jsonConf.priceBlockElements[priceBlockElementKey] as IPriceBlockElement<IFullPriceProperties>;
   const boxStyle = useBoxStyle({ gridSize, box: properties?.box });
   const fontStyle = useFontStyle({ gridSize, font: properties?.font });
 

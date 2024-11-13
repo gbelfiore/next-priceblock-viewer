@@ -1,4 +1,4 @@
-import type { IGenericPreviewProps } from '../types';
+import type { IGenericPreviewProps, IPriceBlockElement, IStaticCustomFieldProperties } from '../types';
 import type { CSSProperties } from 'react';
 import { useMemo } from 'react';
 import useBoxStyle from '../../hooks/useBoxStyle';
@@ -10,7 +10,7 @@ const StaticCustomFieldPreview = ({ priceBlockKey, priceBlockElementKey }: IGene
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);
   const gridSize = priceBlockComp?.gridSize;
   const { priceBlock } = priceBlockComp;
-  const { properties } = priceBlock.jsonConf.priceBlockElements[priceBlockElementKey];
+  const { properties } = priceBlock.jsonConf.priceBlockElements[priceBlockElementKey] as IPriceBlockElement<IStaticCustomFieldProperties>;
   const boxStyle = useBoxStyle({ gridSize, box: properties.box });
   const fontStyle = useFontStyle({ gridSize, font: properties.font });
 
