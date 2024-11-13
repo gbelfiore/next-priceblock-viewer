@@ -100,11 +100,15 @@ interface IBadgeProperties {
 interface IFullPriceProperties {
   showCurrency: boolean;
   font: IPriceBlockFont;
-  showCrossedLine: boolean;
-  rotateCrossedLine: number;
-  crossedLineHeight: number;
+  strikethrough?: IStrikethroughProperties
   box?: IPriceBlockBox;
   format: IPriceBlockFormat;
+}
+
+interface IStrikethroughProperties {
+  angle: number
+  height: number
+  color?: string
 }
 
 interface IDiscountProperties {
