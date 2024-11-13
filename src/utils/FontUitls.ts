@@ -72,7 +72,6 @@ function fontFaceCssToJson(css: string): FontFace[] {
 const getExtraFonts = async (_id: string, url: string) => {
   const res = await fetch(url);
   const cssText = await res.text();
-  // console.log(cssText);
   // const cssJson = cssToJson(cssText);
   const cssJson = fontFaceCssToJson(cssText);
   addCssToDocument(_id, cssText);
