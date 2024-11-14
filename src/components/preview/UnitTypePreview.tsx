@@ -4,14 +4,16 @@ import { useMemo } from 'react';
 import useBoxStyle from '../../hooks/useBoxStyle';
 import useFontStyle from '../../hooks/useFontStyle';
 import classNames from 'classnames';
-import { type IGenericPreviewProps } from '../types';
+import { IPriceBlockElement, IUnitTypeProperties, type IGenericPreviewProps } from '../types';
 
 const UnitTypePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPreviewProps) => {
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);
+  const basePath = priceBlockComp?.priceBlock.basePath;
+
   const gridSize = priceBlockComp?.gridSize;
   const { priceBlock, valuePriceBLock } = priceBlockComp;
-  const { properties } = priceBlock.jsonConf.priceBlockElements[priceBlockElementKey];
-  const boxStyle = useBoxStyle({ gridSize, box: properties.box });
+  const { properties } = priceBlock.jsonConf.priceBlockElements[priceBlockElementKey] as IPriceBlockElement<IUnitTypeProperties>;
+  const boxStyle = useBoxStyle({ basePath, gridSize, box: properties.box });
   const fontStyle = useFontStyle({ gridSize, font: properties.font });
 
   const unitType = valuePriceBLock.unitType;

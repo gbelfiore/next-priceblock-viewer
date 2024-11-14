@@ -1,13 +1,17 @@
 import type { IPriceBlockBox } from '../components/types';
 import { getProportionedSize } from './get-proportioned-size';
 import type { CSSProperties } from 'react';
+import useWebPOrOriginal from './useWebPOrOriginal';
 
 interface IUseBoxStyleProps {
+  basePath: string;
   box: IPriceBlockBox | undefined;
   gridSize: number;
 }
 
-const useBoxStyle = ({ box, gridSize }: IUseBoxStyleProps): CSSProperties => {
+const useBoxStyle = ({ basePath, box, gridSize }: IUseBoxStyleProps): CSSProperties => {
+  const backgroundUrl = useWebPOrOriginal(basePath, box?.url);
+
   let style: CSSProperties = {
     backgroundColor: box?.color ?? 'transparent',
   };
@@ -59,10 +63,10 @@ const useBoxStyle = ({ box, gridSize }: IUseBoxStyleProps): CSSProperties => {
     };
   }
 
-  if (box?.url) {
+  if (backgroundUrl) {
     style = {
       ...style,
-      backgroundImage: `url("${box.url}")`,
+      backgroundImage: `url("${backgroundUrl}")`,
       backgroundSize: 'contain',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',

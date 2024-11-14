@@ -100,11 +100,15 @@ interface IBadgeProperties {
 interface IFullPriceProperties {
   showCurrency: boolean;
   font: IPriceBlockFont;
-  showCrossedLine: boolean;
-  rotateCrossedLine: number;
-  crossedLineHeight: number;
+  strikethrough?: IStrikethroughProperties
   box?: IPriceBlockBox;
   format: IPriceBlockFormat;
+}
+
+interface IStrikethroughProperties {
+  angle: number
+  height: number
+  color?: string
 }
 
 interface IDiscountProperties {
@@ -137,7 +141,14 @@ interface ICustomFieldProperties {
   box?: IPriceBlockBox;
 }
 
-type PriceBlockGenericProperties = IBadgeProperties | IFullPriceProperties | IDiscountProperties | IDiscountedProperties | ICustomFieldProperties;
+type PriceBlockGenericProperties =
+  | IBadgeProperties
+  | IFullPriceProperties
+  | IDiscountProperties
+  | IDiscountedProperties
+  | ICustomFieldProperties
+  | IStaticCustomFieldProperties
+  | IUnitTypeProperties;
 
 interface IPriceBlockElement<T extends PriceBlockGenericProperties> {
   label: string;
@@ -147,11 +158,6 @@ interface IPriceBlockElement<T extends PriceBlockGenericProperties> {
 }
 
 type IPriceBlockElements = { [key in PriceBlockElementKey]?: IPriceBlockElement<PriceBlockGenericProperties> };
-
-interface PriceBLockForSave {
-  settings: IPriceBlockSettings;
-  priceBlockElements: IPriceBlockElements;
-}
 
 interface IPriceBlockSettings {
   name: string;
@@ -166,6 +172,7 @@ interface IPriceBlockSettings {
     color?: string;
     url?: string;
   };
+  fontsUrl?: string;
 }
 
 type DynamicPriceBlockElementKey = PriceBlockElementKey | `customfield_${number}` | `static_customfield_${number}`;
@@ -192,7 +199,6 @@ export type {
   IDiscountedProperties,
   IUnitTypeProperties,
   ICustomFieldProperties,
-  PriceBLockForSave,
   DynamicPriceBlockElementKey,
   IStaticCustomFieldProperties,
 };

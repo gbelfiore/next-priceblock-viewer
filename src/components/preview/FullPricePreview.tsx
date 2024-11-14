@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import { useMemo } from 'react';
 import classNames from 'classnames';
-import { IGenericPreviewProps } from '../types';
+import { IFullPriceProperties, IGenericPreviewProps, IPriceBlockElement } from '../types';
 import SeparateNumberFormatted from '../separate-number-formatted/SeparateNumberFormatted';
 import useBoxStyle from '../../hooks/useBoxStyle';
 import useFontStyle from '../../hooks/useFontStyle';
@@ -9,11 +9,13 @@ import { usePriceBlockStore } from '../../zustand/price-block-store';
 
 const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPreviewProps) => {
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);
+  const basePath = priceBlockComp?.priceBlock.basePath;
+
   const gridSize = priceBlockComp?.gridSize;
   const { priceBlock, valuePriceBLock } = priceBlockComp;
   const { settings } = priceBlock.jsonConf;
-  const { properties } = priceBlock.jsonConf.priceBlockElements[priceBlockElementKey];
-  const boxStyle = useBoxStyle({ gridSize, box: properties?.box });
+  const { properties } = priceBlock.jsonConf.priceBlockElements[priceBlockElementKey] as IPriceBlockElement<IFullPriceProperties>;
+  const boxStyle = useBoxStyle({ basePath, gridSize, box: properties?.box });
   const fontStyle = useFontStyle({ gridSize, font: properties?.font });
 
   const fullPrice = valuePriceBLock.fullPrice;
@@ -22,12 +24,12 @@ const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevi
     return { ...boxStyle, ...fontStyle };
   }, [boxStyle, fontStyle]);
 
-  const renderCrossedLine = useMemo(() => {
-    if (!properties?.showCrossedLine) return null;
+  const renderStrikethrough = useMemo(() => {
+    if (!properties?.strikethrough) return null;
     const style: CSSProperties = {
-      backgroundColor: properties.font.color,
-      transform: `rotate(${properties.rotateCrossedLine ?? ''}deg)`,
-      height: `${properties.crossedLineHeight}px`,
+      backgroundColor: properties.strikethrough.color || properties.font.color || '#000',
+      transform: `rotate(${properties.strikethrough?.angle ?? ''}deg)`,
+      height: `${properties.strikethrough?.height}px`,
       width: '90%',
       position: 'absolute',
     };
@@ -37,8 +39,8 @@ const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevi
   if (!properties || !fullPrice) return null;
 
   return (
-    <div className={classNames('flex h-full w-full flex-col justify-center', { relative: properties.showCrossedLine })} style={getStyle}>
-      {renderCrossedLine}
+    <div className={classNames('flex h-full w-full flex-col justify-center', { relative: properties.strikethrough })} style={getStyle}>
+      {renderStrikethrough}
       <SeparateNumberFormatted
         thousandSeparator={settings?.separator.thousand}
         decimalSeparator={settings?.separator.decimal}
