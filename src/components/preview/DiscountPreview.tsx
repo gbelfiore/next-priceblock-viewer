@@ -3,15 +3,17 @@ import { useMemo } from 'react';
 import useBoxStyle from '../../hooks/useBoxStyle';
 import useFontStyle from '../../hooks/useFontStyle';
 import classNames from 'classnames';
-import { IGenericPreviewProps } from '../types';
+import { IDiscountProperties, IGenericPreviewProps, IPriceBlockElement } from '../types';
 import { usePriceBlockStore } from '../../zustand/price-block-store';
 
 const DiscountPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPreviewProps) => {
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);
+  const basePath = priceBlockComp?.priceBlock.basePath;
+
   const gridSize = priceBlockComp?.gridSize;
   const { priceBlock, valuePriceBLock } = priceBlockComp;
-  const { properties } = priceBlock.jsonConf.priceBlockElements[priceBlockElementKey];
-  const boxStyle = useBoxStyle({ gridSize, box: properties.box });
+  const { properties } = priceBlock.jsonConf.priceBlockElements[priceBlockElementKey] as IPriceBlockElement<IDiscountProperties>;
+  const boxStyle = useBoxStyle({ basePath, gridSize, box: properties.box });
   const fontStyle = useFontStyle({ gridSize, font: properties.font });
 
   const discount = valuePriceBLock.discount;
