@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import Elements from './Elements';
 import { PriceBlockStoreStateItem, usePriceBlockStore } from '../zustand/price-block-store';
 import { PriceBlock } from '../types/price-block';
+import useWebPOrOriginal from '../hooks/useWebPOrOriginal';
 
 interface DynamicPriceBlockProps {
   priceBlock: PriceBlock;
@@ -19,6 +20,9 @@ interface DynamicPriceBlockProps {
 const DynamicPriceBlock = ({ priceBlock, priceBlockKey, gridSize, valuePriceBLock }: DynamicPriceBlockProps) => {
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);
 
+  const basePath = priceBlockComp?.priceBlock.basePath;
+  const backgroundUrl = useWebPOrOriginal(basePath, priceBlockComp?.priceBlock?.jsonConf?.settings?.background?.url);
+
   useEffect(() => {
     const item: PriceBlockStoreStateItem = {
       priceBlock,
@@ -31,9 +35,9 @@ const DynamicPriceBlock = ({ priceBlock, priceBlockKey, gridSize, valuePriceBLoc
   const getBackground = useMemo(() => {
     const background = priceBlockComp?.priceBlock?.jsonConf?.settings?.background;
     if (background) {
-      if (background.type == 'image') {
-        return `url(${background.url}) center center / contain no-repeat`;
-      } else if (background.type == 'color') {
+      if (background.type == 'image' && backgroundUrl) {
+        return `url(${backgroundUrl}) center center / contain no-repeat`;
+      } else if (background.type == 'color' && background.color) {
         return background.color;
       } else {
         return 'none';
@@ -41,7 +45,7 @@ const DynamicPriceBlock = ({ priceBlock, priceBlockKey, gridSize, valuePriceBLoc
     } else {
       return 'none';
     }
-  }, [priceBlockComp?.priceBlock?.jsonConf?.settings?.background]);
+  }, [backgroundUrl, priceBlockComp?.priceBlock?.jsonConf?.settings?.background]);
 
   if (!priceBlockComp) return null;
   return (

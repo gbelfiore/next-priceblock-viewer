@@ -172,25 +172,21 @@ export function Dashboard() {
                     <Skeleton className="h-4 w-[200px]" />
                   </div>
                 </div>
-              ) : (
-                priceBlocks.length > 0 &&
-                currentPriceBlockIndex &&
-                priceBlocks[currentPriceBlockIndex] && (
-                  <DynamicPriceBlock
-                    priceBlockKey="test_price_block"
-                    key={currentPriceBlockIndex}
-                    priceBlock={priceBlocks[currentPriceBlockIndex]}
-                    gridSize={gridSize}
-                    valuePriceBLock={{
-                      fullPrice: '50.40',
-                      discount: '30%',
-                      discounted: '44,90',
-                      unitType: 'al kg',
-                      textCustom: customFields,
-                    }}
-                  />
-                )
-              )}
+              ) : priceBlocks.length > 0 && currentPriceBlockIndex !== undefined && priceBlocks[currentPriceBlockIndex] ? (
+                <DynamicPriceBlock
+                  priceBlockKey="test_price_block"
+                  key={currentPriceBlockIndex}
+                  priceBlock={priceBlocks[currentPriceBlockIndex]}
+                  gridSize={gridSize}
+                  valuePriceBLock={{
+                    fullPrice: '50.40',
+                    discount: '30%',
+                    discounted: '44,90',
+                    unitType: 'al kg',
+                    textCustom: customFields,
+                  }}
+                />
+              ) : null}
             </div>
 
             <form
