@@ -17,9 +17,10 @@ type ISeparateNumberFormattedProps = {
   decimalSeparator?: string;
   thousandSeparator?: string;
   showCurrency?: boolean;
-  value?: number;
+  value?: number | string;
   onChangePriceFormat?: (value?: PriceFormatType) => void;
   gridSize: number;
+  hideDecimalsForInteger?: boolean;
 };
 
 const SeparateNumberFormatted = ({
@@ -33,6 +34,7 @@ const SeparateNumberFormatted = ({
   currency,
   showCurrency,
   gridSize,
+  hideDecimalsForInteger,
 }: ISeparateNumberFormattedProps) => {
   const { containerClass, decimalClass, integerStyle, decimalContainerStyle, currencyStyle, decimalStyle } = useFormattedCurrencyStyle({
     className,
@@ -61,6 +63,7 @@ const SeparateNumberFormatted = ({
       decimalSeparator={decimalSeparator}
       thousandSeparator={thousandSeparator}
       showCurrency={showCurrency}
+      hideDecimalsForInteger={hideDecimalsForInteger}
     />
   );
 };

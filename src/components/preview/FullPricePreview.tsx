@@ -13,7 +13,6 @@ const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevi
 
   const gridSize = priceBlockComp?.gridSize;
   const { priceBlock, valuePriceBLock } = priceBlockComp;
-  const { settings } = priceBlock.jsonConf;
   const { properties } = priceBlock.jsonConf.priceBlockElements[priceBlockElementKey] as IPriceBlockElement<IFullPriceProperties>;
   const boxStyle = useBoxStyle({ basePath, gridSize, box: properties?.box });
   const fontStyle = useFontStyle({ gridSize, font: properties?.font });
@@ -42,14 +41,15 @@ const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevi
     <div className={classNames('flex h-full w-full flex-col justify-center', { relative: properties.strikethrough })} style={getStyle}>
       {renderStrikethrough}
       <SeparateNumberFormatted
-        thousandSeparator={settings?.separator.thousand}
-        decimalSeparator={settings?.separator.decimal}
-        showCurrency={properties.showCurrency}
+        thousandSeparator={properties.separators?.thousand}
+        decimalSeparator={properties.separators?.decimal}
+        showCurrency={properties.currency?.show}
+        currency={properties.currency?.value}
         fontSize={properties.font.size}
-        currency={settings?.currency}
-        value={parseFloat(fullPrice)}
+        value={fullPrice}
         type={properties.format?.isEnable ? properties.format.type : undefined}
         gridSize={gridSize}
+        hideDecimalsForInteger={properties.format.hideDecimalsForInteger}
       />
     </div>
   );

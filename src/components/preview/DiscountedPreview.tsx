@@ -12,7 +12,6 @@ const DiscountedPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrev
 
   const gridSize = priceBlockComp?.gridSize;
   const { priceBlock, valuePriceBLock } = priceBlockComp;
-  const { settings } = priceBlock.jsonConf;
   const { properties } = priceBlock.jsonConf.priceBlockElements[priceBlockElementKey] as IPriceBlockElement<IDiscountedProperties>;
 
   const boxStyle = useBoxStyle({ basePath, gridSize, box: properties.box });
@@ -29,14 +28,15 @@ const DiscountedPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrev
   return (
     <div className={'flex h-full w-full flex-col justify-center'} style={getStyle}>
       <SeparateNumberFormatted
-        thousandSeparator={settings.separator.thousand}
-        decimalSeparator={settings.separator.decimal}
-        showCurrency={properties.showCurrency}
+        thousandSeparator={properties.separators?.thousand}
+        decimalSeparator={properties.separators?.decimal}
+        showCurrency={properties.currency?.show}
+        currency={properties.currency?.value}
         fontSize={properties.font.size}
-        currency={settings.currency}
-        value={parseFloat(discounted)}
+        value={discounted}
         type={properties.format.isEnable ? properties.format.type : undefined}
         gridSize={gridSize}
+        hideDecimalsForInteger={properties.format.hideDecimalsForInteger}
       />
     </div>
   );
