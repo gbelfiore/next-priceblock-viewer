@@ -27,10 +27,12 @@ const DiscountPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevie
     if (!discount) return null;
 
     let value = discount;
-    if (properties.percentage?.show && properties.percentage?.value != undefined) {
-      value = value.replace('%', properties.percentage.value);
-    } else {
-      value = value.replace('%', '');
+    if (properties.percentage) {
+      if (properties.percentage.show && properties.percentage.value != undefined) {
+        value = value.replace('%', properties.percentage.value);
+      } else {
+        value = value.replace('%', '');
+      }
     }
 
     return (
@@ -38,7 +40,7 @@ const DiscountPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevie
         <div dangerouslySetInnerHTML={{ __html: value }} />
       </div>
     );
-  }, [discount, getStyle, properties.percentage?.show, properties.percentage?.value]);
+  }, [discount, getStyle, properties.percentage]);
 
   const renderDiscountSamePrice = useMemo(() => {
     if (!discount) return null;
