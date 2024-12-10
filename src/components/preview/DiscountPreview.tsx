@@ -36,7 +36,7 @@ const DiscountPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevie
     }
 
     return (
-      <div className={classNames('flex h-full w-full flex-col justify-center')} style={getStyle}>
+      <div className={classNames('flex h-full w-full flex-col justify-center')} style={{ ...getStyle, whiteSpace: 'pre-wrap' }}>
         <div dangerouslySetInnerHTML={{ __html: value }} />
       </div>
     );
