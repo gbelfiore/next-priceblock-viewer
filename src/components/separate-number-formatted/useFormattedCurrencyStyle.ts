@@ -17,7 +17,7 @@ const useFormattedCurrencyStyle = ({ className, fontSize, type, gridSize }: Prop
       decimalClass: 'flex gap-2',
       integerStyle: { fontSize: `${getProportionedSize(gridSize, fontSize)}` },
       decimalStyle: { fontSize: `${getProportionedSize(gridSize, fontSize)}` },
-      currencyStyle: { fontSize: `${getProportionedSize(gridSize, fontSize)}` },
+      currencyStyle: { fontSize: `${getProportionedSize(gridSize, fontSize)}`, whiteSpace: 'pre-wrap' },
     };
 
   const isType1 = type == PriceFormatType.TYPE1;
@@ -32,7 +32,7 @@ const useFormattedCurrencyStyle = ({ className, fontSize, type, gridSize }: Prop
     lineHeight: isType3 ? `calc(${getProportionedSize(gridSize, fontSize)} - 10%)` : undefined,
   };
   const decimalContainerStyle: CSSProperties = { lineHeight: isType3 ? `calc(${getProportionedSize(gridSize, fontSize)} - 60%)` : undefined };
-  const currencyStyle: CSSProperties = { fontSize: `calc(${getProportionedSize(gridSize, fontSize)} - 45%)` };
+  const currencyStyle: CSSProperties = { fontSize: `calc(${getProportionedSize(gridSize, fontSize)} - 45%)`, whiteSpace: 'pre-wrap' };
   const decimalStyle = { fontSize: `calc(${getProportionedSize(gridSize, fontSize)} - 45%)` };
 
   return {

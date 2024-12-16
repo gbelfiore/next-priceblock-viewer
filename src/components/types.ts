@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-type Currency = '€' | '$' | '£';
-
 enum FontStyle {
   NORMAL = 'normal',
   ITALIC = 'italic',
@@ -28,6 +26,11 @@ enum PriceBlockElementKey {
   UNIT_TYPE = 'unitType',
 }
 
+enum DiscountType {
+  PERCENTAGE = 'percentage',
+  PRICE = 'price',
+}
+
 interface IPriceBlockPosition {
   rowStart: number;
   rowEnd: number;
@@ -46,6 +49,21 @@ interface IPriceBlockFont {
     width: string;
     color: string;
   };
+}
+
+interface ISeparators {
+  decimal: string;
+  thousand?: string;
+}
+
+interface ICurrency {
+  value?: string;
+  show: boolean;
+}
+
+interface IPercentage {
+  value?: string;
+  show: boolean;
 }
 
 interface IPriceBlockShadow {
@@ -79,6 +97,7 @@ interface IPriceBlockBorder {
 }
 
 interface IPriceBlockFormat {
+  hideDecimalsForInteger: boolean;
   isEnable: boolean;
   type?: PriceFormatType;
 }
@@ -98,30 +117,37 @@ interface IBadgeProperties {
 }
 
 interface IFullPriceProperties {
-  showCurrency: boolean;
   font: IPriceBlockFont;
-  strikethrough?: IStrikethroughProperties
+  strikethrough?: IStrikethroughProperties;
   box?: IPriceBlockBox;
   format: IPriceBlockFormat;
+  currency: ICurrency;
+  separators: ISeparators;
 }
 
 interface IStrikethroughProperties {
-  angle: number
-  height: number
-  color?: string
+  angle: number;
+  height: number;
+  color?: string;
 }
 
 interface IDiscountProperties {
   font: IPriceBlockFont;
   box?: IPriceBlockBox;
+  type: DiscountType;
+  percentage?: IPercentage;
+  format?: IPriceBlockFormat;
+  separators?: ISeparators;
+  currency?: ICurrency;
 }
 
 interface IDiscountedProperties {
-  showCurrency: boolean;
   format: IPriceBlockFormat;
   font: IPriceBlockFont;
   showFontBorder: boolean;
   box?: IPriceBlockBox;
+  separators: ISeparators;
+  currency: ICurrency;
 }
 
 interface IUnitTypeProperties {
@@ -161,12 +187,7 @@ type IPriceBlockElements = { [key in PriceBlockElementKey]?: IPriceBlockElement<
 
 interface IPriceBlockSettings {
   name: string;
-  currency: Currency;
   showGrid: boolean;
-  separator: {
-    decimal: string;
-    thousand: string;
-  };
   background: {
     type: 'image' | 'color' | 'nothing';
     color?: string;
@@ -185,7 +206,6 @@ interface IGenericPreviewProps {
 export type { IGenericPreviewProps };
 
 export type {
-  Currency,
   IPriceBlockFont,
   IPriceBlockBox,
   IPriceBlockSettings,
@@ -201,5 +221,8 @@ export type {
   ICustomFieldProperties,
   DynamicPriceBlockElementKey,
   IStaticCustomFieldProperties,
+  ICurrency,
+  ISeparators,
+  IPercentage,
 };
-export { PriceFormatType, PriceBlockElementKey, FontStyle, AlignText };
+export { PriceFormatType, PriceBlockElementKey, FontStyle, AlignText, DiscountType };
