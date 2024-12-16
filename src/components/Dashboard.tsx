@@ -13,7 +13,7 @@ import { Badge } from './ui/badge';
 const enviroments = [
   {
     id: 1,
-    country: 'Italy',
+    country: 'Italy - stg',
     env: 'staging',
     url: 'https://staging.dacnl39nyabtl.amplifyapp.com',
   },

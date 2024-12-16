@@ -1,6 +1,7 @@
-import classNames from "classnames";
-import type { CSSProperties } from "react";
-import type { SeparateNumberCurrencyPosition } from "./types";
+import classNames from 'classnames';
+import type { CSSProperties } from 'react';
+import type { SeparateNumberCurrencyPosition } from './types';
+import { cleanAndSplitPrice } from '../../utils/priceUtils';
 
 type SeparateNumberClasses = {
   containerClass?: string;
@@ -17,7 +18,7 @@ type SeparateNumberStyles = {
 };
 
 type ISeparateNumberProps = {
-  value?: number;
+  value?: number | string;
   classes?: SeparateNumberClasses;
   fontSize?: string;
   styles?: SeparateNumberStyles;
@@ -27,6 +28,7 @@ type ISeparateNumberProps = {
   decimalSeparator?: string;
   thousandSeparator?: string;
   showCurrency?: boolean;
+  hideDecimalsForInteger?: boolean;
 };
 
 const SeparateNumber = ({
@@ -34,33 +36,36 @@ const SeparateNumber = ({
   styles,
   classes,
   onClick,
-  currencyPosition = "right",
-  currency = "€",
-  decimalSeparator = ",",
-  thousandSeparator = ".",
-  showCurrency = true
+  currencyPosition = 'right',
+  currency = '€',
+  decimalSeparator = ',',
+  thousandSeparator = '.',
+  showCurrency = true,
+  hideDecimalsForInteger,
 }: ISeparateNumberProps) => {
-  const containerClass = classNames(classes?.containerClass, "flex");
-  /* We need to create an hook */
-  const valueString = value.toLocaleString("it-IT", { minimumIntegerDigits: 1, minimumFractionDigits: 2 }).split(decimalSeparator);
-  const integerPart = valueString[0]?.replace(".", thousandSeparator);
+  const containerClass = classNames(classes?.containerClass, 'flex');
+  const valueString = cleanAndSplitPrice(value);
+  if (!valueString) return null;
+  const integerPart = valueString[0]?.replace('.', thousandSeparator);
   const decimalPart = valueString[1];
+  const isInteger = parseInt(decimalPart) == 0;
+  const isRenderDecimal = ((isInteger && !hideDecimalsForInteger) || !isInteger) && decimalPart;
 
   return (
     <div className={containerClass} onClick={onClick}>
-      {currencyPosition === "left" && (
+      {currencyPosition === 'left' && (
         <div className="mr-1" style={styles?.currencyStyle}>
           {currency}
         </div>
       )}
       <div style={styles?.integerStyle}>
         {integerPart}
-        {decimalPart && decimalSeparator}
+        {isRenderDecimal && decimalSeparator}
       </div>
 
       <div style={styles?.decimalContainerStyle} className={classes?.decimalClass}>
-        {decimalPart ? <div style={styles?.decimalStyle}>{decimalPart}</div> : <span />}
-        {showCurrency && currencyPosition !== "left" && <div style={styles?.currencyStyle}>{currency}</div>}
+        {isRenderDecimal ? <div style={styles?.decimalStyle}>{decimalPart}</div> : <span />}
+        {showCurrency && currencyPosition !== 'left' && <div style={styles?.currencyStyle}>{currency}</div>}
       </div>
     </div>
   );
