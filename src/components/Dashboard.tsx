@@ -13,7 +13,7 @@ import { Badge } from './ui/badge';
 const enviroments = [
   {
     id: 1,
-    country: 'Italy',
+    country: 'Italy - stg',
     env: 'staging',
     url: 'https://staging.dacnl39nyabtl.amplifyapp.com',
   },
@@ -22,6 +22,36 @@ const enviroments = [
     country: 'Italy',
     env: 'prod',
     url: 'https://environments-it.dacnl39nyabtl.amplifyapp.com',
+  },
+  {
+    id: 3,
+    country: 'Australia',
+    env: 'prod',
+    url: 'https://environments-au.dacnl39nyabtl.amplifyapp.com',
+  },
+  {
+    id: 4,
+    country: 'Brazil',
+    env: 'prod',
+    url: 'https://environments-br.dacnl39nyabtl.amplifyapp.com',
+  },
+  {
+    id: 5,
+    country: 'Brazil',
+    env: 'staging',
+    url: 'https://environments-br-staging.dacnl39nyabtl.amplifyapp.com',
+  },
+  {
+    id: 7,
+    country: 'France',
+    env: 'prod',
+    url: 'https://environments-fr.dacnl39nyabtl.amplifyapp.com',
+  },
+  {
+    id: 8,
+    country: 'Portugal',
+    env: 'prod',
+    url: 'https://environments-pt.dacnl39nyabtl.amplifyapp.com',
   },
 ];
 
