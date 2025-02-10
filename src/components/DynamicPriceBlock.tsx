@@ -19,6 +19,7 @@ interface DynamicPriceBlockProps {
 
 const DynamicPriceBlock = ({ priceBlock, priceBlockKey, gridSize, valuePriceBLock }: DynamicPriceBlockProps) => {
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);
+  console.log(priceBlockComp);
 
   const basePath = priceBlockComp?.priceBlock.basePath;
   const backgroundUrl = useWebPOrOriginal(basePath, priceBlockComp?.priceBlock?.jsonConf?.settings?.background?.url);

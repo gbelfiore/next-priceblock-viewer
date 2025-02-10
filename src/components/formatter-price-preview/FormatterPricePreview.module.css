@@ -1,0 +1,126 @@
+.formatterPricePreview {
+  /* @apply h-full w-full; */
+  @apply grid grid-flow-col;
+}
+
+.cell {
+  @apply grow;
+  @apply justify-center;
+  @apply flex items-center;
+  /* @apply border border-solid border-[#333] bg-[sky]; */
+}
+
+.subCell {
+  @apply h-full w-full;
+  @apply flex flex-col justify-between;
+  /* @apply border border-solid border-[#333] bg-[sky]; */
+}
+
+.subCell > div {
+  @apply flex-1;
+  @apply h-[33%] min-h-[33%] flex-1 shrink grow;
+}
+
+.subCellEmpty {
+  @apply flex-1;
+  @apply h-[33%] min-h-[33%] flex-1 shrink grow;
+}
+
+/* ---------------------------- */
+
+.prefixPreview {
+  @apply h-full w-full;
+  @apply flex flex-col;
+  @apply shrink-0;
+}
+
+.suffixPreview {
+  @apply h-full w-full;
+  @apply flex flex-col;
+  @apply shrink-0;
+}
+
+.integerPreview {
+  @apply h-full w-full;
+  @apply flex flex-col items-center justify-center;
+  @apply shrink-0;
+}
+
+.currencyPreview {
+  @apply h-full w-full;
+  @apply flex flex-col;
+  @apply shrink grow;
+}
+
+.currencyHorizontalPreview {
+  @apply w-full;
+  @apply flex flex-row items-center;
+  @apply shrink grow;
+}
+
+.decimalPreview {
+  @apply h-full w-full;
+  @apply flex flex-col items-center;
+  @apply shrink grow;
+}
+
+/* .formatterPricePreviewPrefix {
+  @apply h-full;
+  @apply shrink-0;
+}
+
+.formatterPricePreviewCurrency {
+  @apply h-full;
+  @apply shrink-0;
+}
+
+.formatterPricePreviewInteger {
+  @apply h-full;
+  @apply shrink-0;
+}
+
+.formatterPricePreviewDecimal {
+  @apply h-full;
+  @apply shrink-0;
+}
+
+.formatterPricePreviewSuffix {
+  @apply h-full;
+  @apply shrink-0;
+}
+
+.prefixPreview {
+  @apply h-full w-full;
+  @apply flex flex-col;
+  @apply shrink-0;
+}
+
+.suffixPreview {
+  @apply h-full w-full;
+  @apply flex flex-col;
+  @apply shrink-0;
+}
+
+.integerPreview {
+  @apply h-full w-full;
+  @apply flex flex-col items-center justify-center;
+  @apply shrink-0;
+}
+
+.currencyPreview {
+  @apply h-full w-full;
+  @apply flex flex-col items-center;
+  @apply shrink-0;
+}
+
+.currencyHorizontalPreview {
+  @apply w-full;
+  @apply flex flex-row items-center;
+  @apply shrink-0;
+}
+
+.decimalPreview {
+  @apply h-full w-full;
+  @apply flex flex-col items-center;
+  @apply shrink-0;
+} */

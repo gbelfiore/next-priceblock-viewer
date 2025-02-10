@@ -5,6 +5,7 @@ import useFontStyle from '../../hooks/useFontStyle';
 import classNames from 'classnames';
 import { ICustomFieldProperties, IGenericPreviewProps, IPriceBlockElement } from '../types';
 import { usePriceBlockStore } from '../../zustand/price-block-store';
+import CrossedLine from '../CrossedLine';
 
 const CustomFieldPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPreviewProps) => {
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);
@@ -24,7 +25,8 @@ const CustomFieldPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPre
 
   if (!currentCustomField?.value || currentCustomField.value.length === 0) return null;
   return (
-    <div className={classNames('flex h-full w-full flex-col justify-center')} style={getStyle}>
+    <div className={classNames('flex h-full w-full flex-col justify-center', { relative: properties.strikethrough })} style={getStyle}>
+      <CrossedLine font={properties.font} strikethrough={properties.strikethrough} />
       <div dangerouslySetInnerHTML={{ __html: currentCustomField.value }} />
     </div>
   );

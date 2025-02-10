@@ -5,6 +5,7 @@ import useBoxStyle from '../../hooks/useBoxStyle';
 import useFontStyle from '../../hooks/useFontStyle';
 import classNames from 'classnames';
 import { usePriceBlockStore } from '../../zustand/price-block-store';
+import CrossedLine from '../CrossedLine';
 
 const StaticCustomFieldPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPreviewProps) => {
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);
@@ -23,7 +24,8 @@ const StaticCustomFieldPreview = ({ priceBlockKey, priceBlockElementKey }: IGene
   if (!properties) return null;
 
   return (
-    <div className={classNames('flex h-full w-full flex-col justify-center')} style={getStyle}>
+    <div className={classNames('flex h-full w-full flex-col justify-center', { relative: properties.strikethrough })} style={getStyle}>
+      <CrossedLine font={properties.font} strikethrough={properties.strikethrough} />
       <div dangerouslySetInnerHTML={{ __html: properties?.exampleContent }} />
     </div>
   );

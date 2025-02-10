@@ -6,6 +6,9 @@ import SeparateNumberFormatted from '../separate-number-formatted/SeparateNumber
 import useBoxStyle from '../../hooks/useBoxStyle';
 import useFontStyle from '../../hooks/useFontStyle';
 import { usePriceBlockStore } from '../../zustand/price-block-store';
+import { config } from '../../config/config';
+import CrossedLine from '../CrossedLine';
+import FormatterPricePreview from '../formatter-price-preview/FormatterPricePreview';
 
 const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPreviewProps) => {
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);
@@ -13,6 +16,7 @@ const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevi
 
   const gridSize = priceBlockComp?.gridSize;
   const { priceBlock, valuePriceBLock } = priceBlockComp;
+  const settings = priceBlock.jsonConf.settings
   const { properties } = priceBlock.jsonConf.priceBlockElements[priceBlockElementKey] as IPriceBlockElement<IFullPriceProperties>;
   const boxStyle = useBoxStyle({ basePath, gridSize, box: properties?.box });
   const fontStyle = useFontStyle({ gridSize, font: properties?.font });
@@ -23,24 +27,14 @@ const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevi
     return { ...boxStyle, ...fontStyle };
   }, [boxStyle, fontStyle]);
 
-  const renderStrikethrough = useMemo(() => {
-    if (!properties?.strikethrough) return null;
-    const style: CSSProperties = {
-      backgroundColor: properties.strikethrough.color || properties.font.color || '#000',
-      transform: `rotate(${properties.strikethrough?.angle ?? ''}deg)`,
-      height: `${properties.strikethrough?.height}px`,
-      width: '90%',
-      position: 'absolute',
-    };
-    return <div style={style}></div>;
-  }, [properties]);
+
 
   if (!properties || !fullPrice) return null;
 
   return (
     <div className={classNames('flex h-full w-full flex-col justify-center', { relative: properties.strikethrough })} style={getStyle}>
-      {renderStrikethrough}
-      <SeparateNumberFormatted
+      <CrossedLine font={properties.font} strikethrough={properties.strikethrough} />
+      {settings.version != config.version && <SeparateNumberFormatted
         thousandSeparator={properties.separators?.thousand}
         decimalSeparator={properties.separators?.decimal}
         showCurrency={properties.currency?.show}
@@ -50,7 +44,19 @@ const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevi
         type={properties.format?.isEnable ? properties.format.type : undefined}
         gridSize={gridSize}
         hideDecimalsForInteger={properties.format.hideDecimalsForInteger}
-      />
+      />}
+
+      {settings.version == config.version && <FormatterPricePreview
+        value={fullPrice}
+        currency={properties.currency?.value}
+        prefix={properties.currency?.prefix}
+        suffix={properties.currency?.suffix}
+        thousandSeparator={settings.separators?.thousand}
+        decimalSeparator={settings.separators?.decimal}
+        font={properties.font}
+        format={properties.format}
+        gridSize={gridSize}
+      />}
     </div>
   );
 };

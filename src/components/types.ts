@@ -1,24 +1,35 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-enum FontStyle {
+export enum SelectTemplate {
+  CURRENCY_ON_RIGHT_1 = 'currency_on_right_1',
+  CURRENCY_ON_RIGHT_2 = 'currency_on_right_2',
+  CURRENCY_ON_LEFT_1 = 'currency_on_left_1',
+  CURRENCY_ON_LEFT_2 = 'currency_on_left_2',
+  CURRENCY_ON_TOP_1 = 'currency_on_top_1',
+  CURRENCY_ON_TOP_2 = 'currency_on_top_2',
+  CURRENCY_ON_BOTTOM_1 = 'currency_on_bottom_1',
+  CURRENCY_ON_BOTTOM_2 = 'currency_on_bottom_2',
+}
+
+export enum FontStyle {
   NORMAL = 'normal',
   ITALIC = 'italic',
   BOLD = 'bold',
 }
 
-enum PriceFormatType {
+export enum PriceFormatType {
   TYPE1 = 'type1',
   TYPE2 = 'type2',
   TYPE3 = 'type3',
   TYPE4 = 'type4',
 }
 
-enum AlignText {
+export enum AlignText {
   RIGHT = 'right',
   CENTER = 'center',
   LEFT = 'left',
 }
 
-enum PriceBlockElementKey {
+export enum PriceBlockElementKey {
   FULLPRICE = 'fullPrice',
   DISCOUNT = 'discount',
   DISCOUNTED = 'discounted',
@@ -26,203 +37,259 @@ enum PriceBlockElementKey {
   UNIT_TYPE = 'unitType',
 }
 
-enum DiscountType {
+export enum DiscountType {
   PERCENTAGE = 'percentage',
   PRICE = 'price',
 }
 
-interface IPriceBlockPosition {
-  rowStart: number;
-  rowEnd: number;
-  colStart: number;
-  colEnd: number;
+export type DynamicPriceBlockElementKey = PriceBlockElementKey | `customfield_${number}` | `static_customfield_${number}`
+
+export type TBorderStyle = 'solid' | 'dotted' | 'dashed' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset'
+
+export interface IPriceBlockPosition {
+  rowStart: number
+  rowEnd: number
+  colStart: number
+  colEnd: number
 }
 
-interface IPriceBlockFont {
-  family: string;
-  size: string;
-  style: FontStyle;
-  color: string;
-  align: AlignText;
+export interface IPriceBlockFontElement {
+  size?: string
+  style?: FontStyle
+  lineHeight?: string
+  letterSpacing?: string
+  color?: string
+  margin?: IPriceBlockPadding
+}
+
+export interface IPriceBlockFont {
+  family: string
+  size: string
+  style: FontStyle
+  color: string
+  align: AlignText
+  lineHeight?: string
+  letterSpacing?: string
   fontBorder: {
-    isEnabled: boolean;
-    width: string;
-    color: string;
-  };
+    width?: string
+    color?: string
+  }
+  integerStyles?: IPriceBlockFontElement
+  decimalStyles?: IPriceBlockFontElement
+  currencyStyles?: IPriceBlockFontElement
+  prefixStyles?: IPriceBlockFontElement
+  suffixStyles?: IPriceBlockFontElement
 }
 
-interface ISeparators {
-  decimal: string;
-  thousand?: string;
+export type Separator = '.' | ',' | undefined
+
+export interface ISeparators {
+  decimal?: Separator
+  thousand?: Separator
 }
 
-interface ICurrency {
-  value?: string;
+export interface ICurrency {
+  value?: string
+  // @deprecated in priceBlock 2.0.0 use IPriceBlockSettings.separators
   show: boolean;
+  prefix?: string
+  suffix?: string
 }
 
-interface IPercentage {
-  value?: string;
-  show: boolean;
+export interface IPercentage {
+  value?: string
+  // @deprecated in priceBlock 2.0.0 use IPriceBlockSettings.separators
+  show?: boolean
 }
 
-interface IPriceBlockShadow {
-  offsetX?: string;
-  offsetY?: string;
-  blur?: string;
-  color?: string;
+export interface IPriceBlockShadow {
+  offsetX?: string
+  offsetY?: string
+  blur?: string
+  color?: string
 }
 
-interface IPriceBlockPadding {
-  top?: string;
-  right?: string;
-  bottom?: string;
-  left?: string;
+export interface IPriceBlockPadding {
+  top?: string
+  right?: string
+  bottom?: string
+  left?: string
 }
 
-interface IPriceBlockBorder {
-  color?: string;
+export interface IPriceBlockBorder {
+  color?: string
+  style?: TBorderStyle
   thickness?: {
-    left?: string;
-    top?: string;
-    right?: string;
-    bottom?: string;
-  };
+    left?: string
+    top?: string
+    right?: string
+    bottom?: string
+  }
   radius?: {
-    tl?: string;
-    tr?: string;
-    bl?: string;
-    br?: string;
-  };
+    tl?: string
+    tr?: string
+    bl?: string
+    br?: string
+  }
 }
 
-interface IPriceBlockFormat {
-  hideDecimalsForInteger: boolean;
-  isEnable: boolean;
-  type?: PriceFormatType;
+export enum ESeparator {
+  INTEGER = 'integer',
+  DECIMAL = 'decimal',
+}
+export enum EAlignDecimal {
+  BOTTOM = 'bottom',
+  CENTER = 'center',
+  TOP = 'top',
+}
+export enum EAlignPrefix {
+  BOTTOM = 'bottom',
+  CENTER = 'center',
+  TOP = 'top',
+}
+export enum EAlignSuffix {
+  BOTTOM = 'bottom',
+  CENTER = 'center',
+  TOP = 'top',
+}
+export enum EPositionCurrency {
+  LEFT = 'left',
+  RIGHT = 'right',
+  TOP = 'top',
+  BOTTOM = 'bottom',
+}
+export enum EAlignCurrency {
+  LEFT = 'left',
+  RIGHT = 'right',
+  TOP = 'top',
+  BOTTOM = 'bottom',
+  CENTER_VERTICAL = 'center_vertical',
+  CENTER_HORIZONTAL = 'center_horizontal',
 }
 
-interface IPriceBlockBox {
-  color?: string;
-  border?: IPriceBlockBorder;
-  shadow?: IPriceBlockShadow;
-  padding?: IPriceBlockPadding;
-  url?: string;
+export interface IPriceBlockFormat {
+  hideDecimalsForInteger?: boolean
+  // @deprecated in priceBlock 2.0.0 use IPriceBlockSettings.separators
+  isEnable?: boolean
+  // @deprecated in priceBlock 2.0.0 use IPriceBlockSettings.separators
+  type?: PriceFormatType
+  separator?: ESeparator
+  alignDecimal?: EAlignDecimal
+  positionCurrency?: EPositionCurrency
+  alignCurrency?: EAlignCurrency
+  alignPrefix?: EAlignPrefix
+  alignSuffix?: EAlignSuffix
 }
 
-interface IBadgeProperties {
-  url?: string;
-  rotate: number;
-  size: number;
+export interface IPriceBlockBox {
+  color?: string
+  border?: IPriceBlockBorder
+  shadow?: IPriceBlockShadow
+  padding?: IPriceBlockPadding
+  url?: string
 }
 
-interface IFullPriceProperties {
-  font: IPriceBlockFont;
-  strikethrough?: IStrikethroughProperties;
-  box?: IPriceBlockBox;
-  format: IPriceBlockFormat;
-  currency: ICurrency;
-  separators: ISeparators;
+export interface IBadgeProperties {
+  url?: string
+  rotate: number
+  size: number
 }
 
-interface IStrikethroughProperties {
-  angle: number;
-  height: number;
-  color?: string;
+export interface IStrikethrough {
+  angle: number
+  height: number
+  color?: string
 }
 
-interface IDiscountProperties {
-  font: IPriceBlockFont;
-  box?: IPriceBlockBox;
-  type: DiscountType;
-  percentage?: IPercentage;
-  format?: IPriceBlockFormat;
-  separators?: ISeparators;
-  currency?: ICurrency;
+export interface IFullPriceProperties {
+  // exampleContent: string
+  font: IPriceBlockFont
+  strikethrough?: IStrikethrough
+  box?: IPriceBlockBox
+  format: IPriceBlockFormat
+  currency: ICurrency
+  // @deprecated in priceBlock 2.0.0 use IPriceBlockSettings.separators
+  separators?: ISeparators
 }
 
-interface IDiscountedProperties {
-  format: IPriceBlockFormat;
-  font: IPriceBlockFont;
-  showFontBorder: boolean;
-  box?: IPriceBlockBox;
-  separators: ISeparators;
-  currency: ICurrency;
+export interface IDiscountProperties {
+  // exampleContent: string
+  font: IPriceBlockFont
+  strikethrough?: IStrikethrough
+  box?: IPriceBlockBox
+  format: IPriceBlockFormat
+  currency?: ICurrency
+  type: DiscountType
+  percentage?: IPercentage
+  // @deprecated in priceBlock 2.0.0 use IPriceBlockSettings.separators
+  separators?: ISeparators
 }
 
-interface IUnitTypeProperties {
-  exampleContent: string;
-  font: IPriceBlockFont;
-  box?: IPriceBlockBox;
+export interface IDiscountedProperties {
+  // exampleContent: string
+  font: IPriceBlockFont
+  strikethrough?: IStrikethrough
+  box?: IPriceBlockBox
+  format: IPriceBlockFormat
+  currency: ICurrency
+  // @deprecated in priceBlock 2.0.0 use IPriceBlockSettings.separators
+  separators?: ISeparators
 }
 
-interface IStaticCustomFieldProperties {
-  exampleContent: string;
-  font: IPriceBlockFont;
-  box?: IPriceBlockBox;
+export interface IUnitTypeProperties {
+  exampleContent: string
+  font: IPriceBlockFont
+  box?: IPriceBlockBox
 }
 
-interface ICustomFieldProperties {
-  font: IPriceBlockFont;
-  box?: IPriceBlockBox;
+export interface IStaticCustomFieldProperties {
+  exampleContent: string
+  font: IPriceBlockFont
+  box?: IPriceBlockBox
+  strikethrough?: IStrikethrough
 }
 
-type PriceBlockGenericProperties =
+export interface ICustomFieldProperties {
+  exampleContent: string
+  font: IPriceBlockFont
+  box?: IPriceBlockBox
+  strikethrough?: IStrikethrough
+}
+
+export type PriceBlockGenericProperties =
   | IBadgeProperties
   | IFullPriceProperties
   | IDiscountProperties
   | IDiscountedProperties
   | ICustomFieldProperties
   | IStaticCustomFieldProperties
-  | IUnitTypeProperties;
+  | IUnitTypeProperties
 
-interface IPriceBlockElement<T extends PriceBlockGenericProperties> {
-  label: string;
-  position: IPriceBlockPosition;
-  layer: number;
-  properties: T;
+export interface IPriceBlockElement<T extends PriceBlockGenericProperties> {
+  label: string
+  position: IPriceBlockPosition
+  layer: number
+  properties: T
 }
 
-type IPriceBlockElements = { [key in PriceBlockElementKey]?: IPriceBlockElement<PriceBlockGenericProperties> };
-
-interface IPriceBlockSettings {
-  name: string;
-  showGrid: boolean;
+export type IPriceBlockElements = {
+  [key in DynamicPriceBlockElementKey]?: IPriceBlockElement<PriceBlockGenericProperties>
+}
+export interface IPriceBlockSettings {
+  name: string
+  showGrid: boolean
   background: {
-    type: 'image' | 'color' | 'nothing';
-    color?: string;
-    url?: string;
-  };
-  fontsUrl?: string;
+    // @deprecated in priceBlock 2.0.0 use IPriceBlockSettings.separators
+    type?: 'image' | 'color' | 'nothing'
+    color?: string
+    url?: string
+  }
+  fontsUrl?: string
+  separators: ISeparators
+  version?: string
 }
 
-type DynamicPriceBlockElementKey = PriceBlockElementKey | `customfield_${number}` | `static_customfield_${number}`;
-
-interface IGenericPreviewProps {
-  priceBlockKey: string;
-  priceBlockElementKey: PriceBlockElementKey;
+export interface IGenericPreviewProps {
+  priceBlockKey: string
+  priceBlockElementKey: PriceBlockElementKey
 }
-
-export type { IGenericPreviewProps };
-
-export type {
-  IPriceBlockFont,
-  IPriceBlockBox,
-  IPriceBlockSettings,
-  IPriceBlockElements,
-  IPriceBlockPosition,
-  IPriceBlockElement,
-  PriceBlockGenericProperties,
-  IBadgeProperties,
-  IFullPriceProperties,
-  IDiscountProperties,
-  IDiscountedProperties,
-  IUnitTypeProperties,
-  ICustomFieldProperties,
-  DynamicPriceBlockElementKey,
-  IStaticCustomFieldProperties,
-  ICurrency,
-  ISeparators,
-  IPercentage,
-};
-export { PriceFormatType, PriceBlockElementKey, FontStyle, AlignText, DiscountType };
