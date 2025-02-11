@@ -1,4 +1,4 @@
-import type { IPriceBlockBox } from '../components/types';
+import type { IPriceBlockBox } from '../components/types/types';
 import { getProportionedSize } from './get-proportioned-size';
 import type { CSSProperties } from 'react';
 import useWebPOrOriginal from './useWebPOrOriginal';

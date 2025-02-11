@@ -1,4 +1,4 @@
-import { PriceBlockElementKey } from './types';
+import { PriceBlockElementKey } from './types/types';
 import Item from './Item';
 import { usePriceBlockStore } from '../zustand/price-block-store';
 

@@ -2,18 +2,18 @@ import { useMemo } from 'react'
 import style from './FormatterPricePreview.module.css'
 import classNames from 'classnames'
 import useFontStyle from '../../hooks/useFontStyle'
-import { IPriceBlockFont, IPriceBlockFormat, EPositionCurrency, EAlignCurrency } from '../types'
+import { IPriceBlockFont, EPositionCurrency, EAlignCurrency, typesV2 } from '../types/types'
 
 interface ICurrencyPreviewProps {
   value?: string
   font?: IPriceBlockFont
-  format?: IPriceBlockFormat
+  format?: typesV2.IPriceBlockFormat
   gridSize: number;
 
 }
 
-const CurrencyPreview = ({ value, font, format,gridSize }: ICurrencyPreviewProps) => {
-  const fontStyle = useFontStyle({ font: font, specializations: font?.currencyStyles,gridSize })
+const CurrencyPreview = ({ value, font, format, gridSize }: ICurrencyPreviewProps) => {
+  const fontStyle = useFontStyle({ font: font, specializations: font?.currencyStyles, gridSize })
 
   const getPosition = useMemo(() => {
     if (format?.positionCurrency && [EPositionCurrency.LEFT, EPositionCurrency.RIGHT].includes(format.positionCurrency)) {

@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import useBoxStyle from '../../hooks/useBoxStyle';
 import useFontStyle from '../../hooks/useFontStyle';
 import classNames from 'classnames';
-import { IPriceBlockElement, IUnitTypeProperties, type IGenericPreviewProps } from '../types';
+import { IPriceBlockElement, IUnitTypeProperties, type IGenericPreviewProps } from '../types/types';
 
 const UnitTypePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPreviewProps) => {
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);

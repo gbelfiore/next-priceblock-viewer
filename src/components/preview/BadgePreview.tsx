@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import { useMemo } from 'react';
 import { isEmpty } from 'lodash-es';
-import { IBadgeProperties, IGenericPreviewProps, IPriceBlockElement } from '../types';
+import { IBadgeProperties, IGenericPreviewProps, IPriceBlockElement } from '../types/types';
 import { usePriceBlockStore } from '../../zustand/price-block-store';
 import useWebPOrOriginal from '../../hooks/useWebPOrOriginal';
 

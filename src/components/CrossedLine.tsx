@@ -1,4 +1,4 @@
-import { IStrikethrough, IPriceBlockFont } from "./types"
+import { IStrikethrough, IPriceBlockFont } from "./types/types"
 
 interface ICrossedLienProps {
   strikethrough?: IStrikethrough | undefined

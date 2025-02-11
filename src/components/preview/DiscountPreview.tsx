@@ -3,12 +3,11 @@ import { useMemo } from 'react';
 import useBoxStyle from '../../hooks/useBoxStyle';
 import useFontStyle from '../../hooks/useFontStyle';
 import classNames from 'classnames';
-import { DiscountType, IDiscountProperties, IGenericPreviewProps, IPriceBlockElement } from '../types';
+import { DiscountType, IDiscountProperties, IGenericPreviewProps, IPriceBlockElement, IStrikethrough, typesV2 } from '../types/types';
 import { usePriceBlockStore } from '../../zustand/price-block-store';
-import SeparateNumberFormatted from '../separate-number-formatted/SeparateNumberFormatted';
 import CrossedLine from '../CrossedLine';
-import { config } from '../../config/config';
-import FormatterPricePreview from '../formatter-price-preview/FormatterPricePreview';
+import ChooserPriceFormat from '../chooser-price-format/ChooserPriceFormat';
+import { isVersionV2 } from '../../utils/VersionUtilis';
 
 const DiscountPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPreviewProps) => {
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);
@@ -46,58 +45,30 @@ const DiscountPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevie
     );
   }, [discount, getStyle, properties.percentage]);
 
+  const strikethrough = useMemo(() => {
+    let strikethrough: IStrikethrough | undefined = undefined
+    if (isVersionV2(settings)) {
+      strikethrough = (properties as typesV2.IDiscountProperties).strikethrough
+    }
+    return strikethrough
+  }, [properties, settings]);
+
   const renderDiscountSamePrice = useMemo(() => {
     if (!discount) return null;
+
     return (
-      <div className={classNames('flex h-full w-full flex-col justify-center', { relative: properties.strikethrough })} style={getStyle}>
-        <CrossedLine font={properties.font} strikethrough={properties.strikethrough} />
+      <div className={classNames('flex h-full w-full flex-col justify-center', { relative: strikethrough })} style={getStyle}>
+        <CrossedLine font={properties.font} strikethrough={strikethrough} />
 
-        {settings.version != config.version && (
-          <SeparateNumberFormatted
-            thousandSeparator={properties.separators?.thousand}
-            decimalSeparator={properties.separators?.decimal}
-            showCurrency={properties.currency?.show}
-            currency={properties.currency?.value}
-            fontSize={properties.font.size}
-            value={discount}
-            type={properties.format?.isEnable ? properties.format?.type : undefined}
-            gridSize={gridSize}
-            hideDecimalsForInteger={properties.format?.hideDecimalsForInteger}
-          />
-        )}
-
-        {settings.version == config.version && (
-          <FormatterPricePreview
-            value={discount}
-            currency={properties.currency?.value}
-            prefix={properties.currency?.prefix}
-            suffix={properties.currency?.suffix}
-            thousandSeparator={settings.separators?.thousand}
-            decimalSeparator={settings.separators?.decimal}
-            font={properties.font}
-            format={properties.format}
-            gridSize={gridSize}
-          />
-        )}
+        <ChooserPriceFormat
+          value={discount}
+          gridSize={gridSize}
+          settings={settings}
+          properties={properties}
+        />
       </div>
     );
-  }, [
-    discount,
-    getStyle,
-    gridSize,
-    properties.currency?.prefix,
-    properties.currency?.show,
-    properties.currency?.suffix,
-    properties.currency?.value,
-    properties.font,
-    properties.format,
-    properties.separators?.decimal,
-    properties.separators?.thousand,
-    properties.strikethrough,
-    settings.separators?.decimal,
-    settings.separators?.thousand,
-    settings.version,
-  ]);
+  }, [discount, getStyle, gridSize, properties, settings, strikethrough]);
 
   if (!properties || !discount) return null;
 

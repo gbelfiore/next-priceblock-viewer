@@ -1,4 +1,4 @@
-import type { IGenericPreviewProps, IPriceBlockElement, IStaticCustomFieldProperties } from '../types';
+import type { IGenericPreviewProps, IPriceBlockElement, IStaticCustomFieldProperties } from '../types/types';
 import type { CSSProperties } from 'react';
 import { useMemo } from 'react';
 import useBoxStyle from '../../hooks/useBoxStyle';

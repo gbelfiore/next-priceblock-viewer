@@ -2,18 +2,18 @@ import { useMemo } from 'react'
 import style from './FormatterPricePreview.module.css'
 import classNames from 'classnames'
 import useFontStyle from '../../hooks/useFontStyle'
-import { IPriceBlockFont, IPriceBlockFormat, ESeparator, EAlignDecimal } from '../types'
+import { IPriceBlockFont, ESeparator, EAlignDecimal, typesV2 } from '../types/types'
 
 interface IDecimalPreviewProps {
   value?: string
   decimalSeparator?: string
   font?: IPriceBlockFont
-  format?: IPriceBlockFormat
+  format?: typesV2.IPriceBlockFormat
   gridSize: number
 }
 
-const DecimalPreview = ({ value, decimalSeparator, font, format,gridSize }: IDecimalPreviewProps) => {
-  const fontStyle = useFontStyle({ font: font, specializations: font?.decimalStyles,gridSize })
+const DecimalPreview = ({ value, decimalSeparator, font, format, gridSize }: IDecimalPreviewProps) => {
+  const fontStyle = useFontStyle({ font: font, specializations: font?.decimalStyles, gridSize })
   const isInteger = value && parseInt(value) == 0
   const isRenderDecimal = ((isInteger && !format?.hideDecimalsForInteger) || !isInteger) && value
 

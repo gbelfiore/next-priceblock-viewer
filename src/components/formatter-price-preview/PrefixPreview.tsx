@@ -2,17 +2,17 @@ import { useMemo } from 'react'
 import style from './FormatterPricePreview.module.css'
 import classNames from 'classnames'
 import useFontStyle from '../../hooks/useFontStyle'
-import { IPriceBlockFont, IPriceBlockFormat, EAlignPrefix } from '../types'
+import { IPriceBlockFont, EAlignPrefix, typesV2 } from '../types/types'
 
 interface IPrefixPreviewProps {
   value?: string
   font?: IPriceBlockFont
-  format?: IPriceBlockFormat
+  format?: typesV2.IPriceBlockFormat
   gridSize: number;
 }
 
-const PrefixPreview = ({ value, font, format,gridSize }: IPrefixPreviewProps) => {
-  const fontStyle = useFontStyle({ font: font, specializations: font?.prefixStyles,gridSize})
+const PrefixPreview = ({ value, font, format, gridSize }: IPrefixPreviewProps) => {
+  const fontStyle = useFontStyle({ font: font, specializations: font?.prefixStyles, gridSize })
 
   const getPosition = useMemo(() => {
     if (format?.alignPrefix == EAlignPrefix.TOP) {

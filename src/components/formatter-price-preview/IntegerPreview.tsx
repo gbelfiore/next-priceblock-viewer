@@ -1,20 +1,20 @@
 import { useMemo } from 'react'
 import style from './FormatterPricePreview.module.css'
 import useFontStyle from '../../hooks/useFontStyle'
-import { IPriceBlockFont, IPriceBlockFormat, ESeparator } from '../types'
+import { IPriceBlockFont, ESeparator, typesV2 } from '../types/types'
 
 interface IIntegerPreviewProps {
   value?: string
   thousandSeparator?: string
   decimalSeparator?: string
   font?: IPriceBlockFont
-  format?: IPriceBlockFormat
+  format?: typesV2.IPriceBlockFormat
   isRenderDecimal?: boolean
   gridSize: number;
 }
 
-const IntegerPreview = ({ value, thousandSeparator, decimalSeparator, font, format, isRenderDecimal = true,gridSize }: IIntegerPreviewProps) => {
-  const fontStyle = useFontStyle({ font: font, specializations: font?.integerStyles,gridSize })
+const IntegerPreview = ({ value, thousandSeparator, decimalSeparator, font, format, isRenderDecimal = true, gridSize }: IIntegerPreviewProps) => {
+  const fontStyle = useFontStyle({ font: font, specializations: font?.integerStyles, gridSize })
 
   const getIntegerValue = useMemo(() => {
     let integer = value ?? ''

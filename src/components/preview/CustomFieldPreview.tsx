@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import useBoxStyle from '../../hooks/useBoxStyle';
 import useFontStyle from '../../hooks/useFontStyle';
 import classNames from 'classnames';
-import { ICustomFieldProperties, IGenericPreviewProps, IPriceBlockElement } from '../types';
+import { ICustomFieldProperties, IGenericPreviewProps, IPriceBlockElement } from '../types/types';
 import { usePriceBlockStore } from '../../zustand/price-block-store';
 import CrossedLine from '../CrossedLine';
 

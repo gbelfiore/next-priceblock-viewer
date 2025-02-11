@@ -7,7 +7,7 @@ import IntegerPreview from './IntegerPreview'
 import CurrencyPreview from './CurrencyPreview'
 import DecimalPreview from './DecimalPreview'
 import { cleanAndSplitPrice } from '../../utils/priceUtils'
-import { IPriceBlockFont, IPriceBlockFormat } from '../types'
+import { IPriceBlockFont, IPriceBlockFormat } from '../types/types'
 import { isRenderDecimalCheck, getGridInfo, EComponents, ESubComponents } from '../../utils/previewGridUtils'
 
 interface IFormatterPricePreviewProps {
@@ -43,8 +43,8 @@ const FormatterPricePreview = ({
 
   const getComponents = useCallback(
     (key: EComponents | ESubComponents) => {
-      if (key == EComponents.PREFIX) return <PrefixPreview value={prefix} font={font} format={format}         gridSize={gridSize}/>
-      else if (key == EComponents.CURRENCY) return <CurrencyPreview value={currency} font={font} format={format}         gridSize={gridSize}/>
+      if (key == EComponents.PREFIX) return <PrefixPreview value={prefix} font={font} format={format} gridSize={gridSize} />
+      else if (key == EComponents.CURRENCY) return <CurrencyPreview value={currency} font={font} format={format} gridSize={gridSize} />
       else if (key == EComponents.INTEGER)
         return (
           <IntegerPreview
@@ -59,10 +59,10 @@ const FormatterPricePreview = ({
           />
         )
       else if (key == EComponents.DECIMAL)
-        return <DecimalPreview value={valueString?.[1]} decimalSeparator={decimalSeparator} font={font} format={format}         gridSize={gridSize}
-/>
-      else if (key == EComponents.SUFFIX) return <SuffixPreview value={suffix} font={font} format={format}         gridSize={gridSize}
-/>
+        return <DecimalPreview value={valueString?.[1]} decimalSeparator={decimalSeparator} font={font} format={format} gridSize={gridSize}
+        />
+      else if (key == EComponents.SUFFIX) return <SuffixPreview value={suffix} font={font} format={format} gridSize={gridSize}
+      />
     },
     [currency, decimalSeparator, font, format, gridSize, isRenderDecimal, prefix, suffix, thousandSeparator, valueString]
   )
