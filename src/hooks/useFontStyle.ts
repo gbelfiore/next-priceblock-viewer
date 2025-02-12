@@ -2,7 +2,6 @@ import { useMemo, type CSSProperties } from 'react';
 import { getProportionedSize } from './get-proportioned-size';
 import { isEmpty } from 'lodash-es';
 import { IPriceBlockFont, IPriceBlockFontElement, FontStyle, AlignText } from '../components/types/types';
-import { useFontBorder } from './use-font-border/useFontBorder';
 
 interface IUseFontStyleProps {
   font?: IPriceBlockFont;
@@ -11,7 +10,6 @@ interface IUseFontStyleProps {
 }
 
 const useFontStyle = ({ font, gridSize, specializations }: IUseFontStyleProps): CSSProperties => {
-  const fontBorder = useFontBorder({ font, gridSize });
   const getFontSize = useMemo(() => {
     return getProportionedSize(gridSize, specializations?.size ?? font?.size);
   }, [font?.size, gridSize, specializations?.size]);
@@ -58,6 +56,14 @@ const useFontStyle = ({ font, gridSize, specializations }: IUseFontStyleProps): 
     };
   }, [gridSize, specializations?.margin?.bottom, specializations?.margin?.left, specializations?.margin?.right, specializations?.margin?.top]);
 
+  const getFontBorder = useMemo(() => {
+    if (!font?.fontBorder.isEnabled) return null;
+    return {
+      WebkitTextStrokeWidth: font?.fontBorder?.width ? getProportionedSize(gridSize, font?.fontBorder?.width) : '0',
+      WebkitTextStrokeColor: font?.fontBorder?.color ?? 'none',
+    };
+  }, [font?.fontBorder?.color, font?.fontBorder.isEnabled, font?.fontBorder?.width, gridSize]);
+
   const style: CSSProperties = {
     fontFamily: font?.family,
     fontSize: getFontSize,
@@ -66,7 +72,7 @@ const useFontStyle = ({ font, gridSize, specializations }: IUseFontStyleProps): 
     color: getColor,
     alignItems: getAlignItems,
     textAlign: getAlignItems,
-    ...fontBorder,
+    ...getFontBorder,
     lineHeight: getLineHeight,
     letterSpacing: getLetterSpacing,
     ...getMargin,

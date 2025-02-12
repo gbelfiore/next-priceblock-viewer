@@ -39,9 +39,4 @@ export interface IPriceBlockSettings extends Omit<typesV1.IPriceBlockSettings, '
   separators: ISeparators;
 }
 
-export interface IFontBorder extends Omit<typesV1.IFontBorder, 'isEnabled'> {
-  width?: string;
-  color?: string;
-}
-
 export type PriceBlockProperties = IFullPriceProperties | IDiscountProperties | IDiscountedProperties;

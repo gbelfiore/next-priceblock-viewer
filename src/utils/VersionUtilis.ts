@@ -1,4 +1,4 @@
-import { IFontBorder, IPriceBlockSettings, PriceBlockProperties, typesV1, typesV2 } from '../components/types/types';
+import { IPriceBlockSettings, PriceBlockProperties, typesV1, typesV2 } from '../components/types/types';
 
 export const isVersionV1 = (settings: IPriceBlockSettings): boolean => {
   return settings.version === '1.0.0';
@@ -24,13 +24,4 @@ export const getSettingsV1 = (settings: IPriceBlockSettings): typesV1.IPriceBloc
 
 export const getSettingsV2 = (settings: IPriceBlockSettings): typesV2.IPriceBlockSettings => {
   return settings as typesV2.IPriceBlockSettings;
-};
-
-//--- fontBorder ---
-export const getFontBorderV1 = (fontBorder: IFontBorder): typesV1.IFontBorder => {
-  return fontBorder as typesV1.IFontBorder;
-};
-
-export const getFontBorderV2 = (fontBorder: IFontBorder): typesV2.IFontBorder => {
-  return fontBorder as typesV2.IFontBorder;
 };

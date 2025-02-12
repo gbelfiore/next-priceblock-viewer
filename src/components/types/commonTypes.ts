@@ -1,4 +1,4 @@
-import { IDiscountedProperties, IDiscountProperties, IFontBorder, IFullPriceProperties } from './types';
+import { IDiscountedProperties, IDiscountProperties, IFullPriceProperties } from './types';
 
 export enum SelectTemplate {
   CURRENCY_ON_RIGHT_1 = 'currency_on_right_1',
@@ -63,6 +63,12 @@ export interface IPriceBlockFontElement {
   margin?: IPriceBlockPadding;
 }
 
+export interface IPriceBlockFontBorder {
+  isEnabled: boolean;
+  width?: string;
+  color?: string;
+}
+
 export interface IPriceBlockFont {
   family: string;
   size: string;
@@ -71,7 +77,7 @@ export interface IPriceBlockFont {
   align: AlignText;
   lineHeight?: string;
   letterSpacing?: string;
-  fontBorder: IFontBorder;
+  fontBorder: IPriceBlockFontBorder;
   integerStyles?: IPriceBlockFontElement;
   decimalStyles?: IPriceBlockFontElement;
   currencyStyles?: IPriceBlockFontElement;

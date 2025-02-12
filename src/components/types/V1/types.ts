@@ -56,10 +56,4 @@ export interface IPriceBlockSettings {
   version?: string;
 }
 
-export interface IFontBorder {
-  isEnabled?: boolean;
-  width?: string;
-  color?: string;
-}
-
 export type PriceBlockProperties = IFullPriceProperties | IDiscountProperties | IDiscountedProperties;

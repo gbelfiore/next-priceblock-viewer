@@ -12,4 +12,3 @@ export type IDiscountProperties = typesV1.IDiscountProperties | typesV2.IDiscoun
 export type IDiscountedProperties = typesV1.IDiscountedProperties | typesV2.IDiscountedProperties;
 export type PriceBlockProperties = typesV1.PriceBlockProperties | typesV2.PriceBlockProperties;
 export type IPriceBlockSettings = typesV1.IPriceBlockSettings | typesV2.IPriceBlockSettings;
-export type IFontBorder = typesV1.IFontBorder | typesV2.IFontBorder;
