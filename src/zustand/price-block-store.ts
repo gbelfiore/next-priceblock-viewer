@@ -32,7 +32,7 @@ const usePriceBlockStore = create<PriceBlockStoreState>((set, get) => ({
 
   actions: {
     init: async (elementKey: string, dataCompItem: PriceBlockStoreStateItem) => {
-      dataCompItem.priceBlock.jsonConf.settings.version = dataCompItem.priceBlock.jsonConf.settings.version ?? '1.0.0'
+      dataCompItem.priceBlock.jsonConf.settings.version = dataCompItem.priceBlock.jsonConf.settings.version ?? '1.0.0';
       const fontsUrl = dataCompItem.priceBlock.jsonConf.settings.fontsUrl;
       if (fontsUrl) await getExtraFonts(dataCompItem.priceBlock._id, fontsUrl);
       set({ dataComp: { ...get().dataComp, [elementKey]: dataCompItem } });

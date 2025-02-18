@@ -3,6 +3,7 @@ import style from './FormatterPricePreview.module.css'
 import classNames from 'classnames'
 import useFontStyle from '../../hooks/useFontStyle'
 import { IPriceBlockFont, ESeparator, EAlignDecimal, typesV2 } from '../types/types'
+import useVerticalOffset from '../../hooks/useVerticaloffset'
 
 interface IDecimalPreviewProps {
   value?: string
@@ -14,6 +15,8 @@ interface IDecimalPreviewProps {
 
 const DecimalPreview = ({ value, decimalSeparator, font, format, gridSize }: IDecimalPreviewProps) => {
   const fontStyle = useFontStyle({ font: font, specializations: font?.decimalStyles, gridSize })
+  const marginStyle = useVerticalOffset({ gridSize, verticalOffset: font?.decimalStyles?.verticalOffset })
+
   const isInteger = value && parseInt(value) == 0
   const isRenderDecimal = ((isInteger && !format?.hideDecimalsForInteger) || !isInteger) && value
 
@@ -39,7 +42,7 @@ const DecimalPreview = ({ value, decimalSeparator, font, format, gridSize }: IDe
   }, [format?.alignDecimal])
 
   return (
-    <div className={classNames(style.decimalPreview, getPosition)} style={fontStyle}>
+    <div className={classNames(style.decimalPreview, getPosition)} style={{ ...fontStyle, ...marginStyle }}>
       {isRenderDecimal && getDecimalValue}
     </div>
   )

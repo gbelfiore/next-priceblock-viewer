@@ -3,6 +3,7 @@ import style from './FormatterPricePreview.module.css'
 import classNames from 'classnames'
 import useFontStyle from '../../hooks/useFontStyle'
 import { IPriceBlockFont, EAlignSuffix, typesV2 } from '../types/types'
+import useVerticalOffset from '../../hooks/useVerticaloffset'
 
 interface ISuffixPreviewProps {
   value?: string
@@ -14,6 +15,7 @@ interface ISuffixPreviewProps {
 
 const SuffixPreview = ({ value, font, format, gridSize }: ISuffixPreviewProps) => {
   const fontStyle = useFontStyle({ font: font, specializations: font?.suffixStyles, gridSize })
+  const marginStyle = useVerticalOffset({ gridSize, verticalOffset: font?.suffixStyles?.verticalOffset })
 
   const getPosition = useMemo(() => {
     if (format?.alignSuffix == EAlignSuffix.TOP) {
@@ -28,7 +30,7 @@ const SuffixPreview = ({ value, font, format, gridSize }: ISuffixPreviewProps) =
   }, [format?.alignSuffix])
 
   return (
-    <div className={classNames(style.suffixPreview, getPosition)} style={fontStyle}>
+    <div className={classNames(style.suffixPreview, getPosition)} style={{ ...fontStyle, ...marginStyle }}>
       {value}
     </div>
   )

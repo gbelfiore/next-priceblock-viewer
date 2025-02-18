@@ -2,22 +2,28 @@ import { useMemo, type CSSProperties } from 'react';
 import { getProportionedSize } from './get-proportioned-size';
 import { isEmpty } from 'lodash-es';
 import { IPriceBlockFont, IPriceBlockFontElement, FontStyle, AlignText } from '../components/types/types';
+import { parseValueAndUm } from '../utils/cssValueUtils';
 
 interface IUseFontStyleProps {
-  font?: IPriceBlockFont;
+  font: IPriceBlockFont | undefined;
   gridSize: number;
   specializations?: IPriceBlockFontElement;
 }
 
 const useFontStyle = ({ font, gridSize, specializations }: IUseFontStyleProps): CSSProperties => {
   const getFontSize = useMemo(() => {
-    return getProportionedSize(gridSize, specializations?.size ?? font?.size);
+    if (specializations?.size && font?.size) {
+      const percentage = parseValueAndUm(specializations.size);
+      if (percentage != undefined) {
+        return getProportionedSize(gridSize, `${(parseFloat(font.size) * percentage.value) / 100}unit`);
+      }
+    }
+    return getProportionedSize(gridSize, font?.size);
   }, [font?.size, gridSize, specializations?.size]);
 
   const getLineHeight = useMemo(() => {
-    const lineHeight = specializations?.lineHeight ?? font?.lineHeight;
-    return !isEmpty(lineHeight) ? getProportionedSize(gridSize, lineHeight) : 'normal';
-  }, [font?.lineHeight, gridSize, specializations?.lineHeight]);
+    return !isEmpty(font?.lineHeight) ? getProportionedSize(gridSize, font?.lineHeight) : 'normal';
+  }, [font?.lineHeight, gridSize]);
 
   const getColor = useMemo(() => {
     const color = specializations?.color ?? font?.color;
@@ -41,20 +47,17 @@ const useFontStyle = ({ font, gridSize, specializations }: IUseFontStyleProps): 
 
   const getAlignItems = useMemo(() => {
     if (!specializations) {
-      // return font?.align == AlignText.LEFT ? 'flex-start' : font?.align == AlignText.RIGHT ? 'flex-end' : 'center'
-      return font?.align == AlignText.LEFT ? 'left' : font?.align == AlignText.RIGHT ? 'right' : 'center';
+      return font?.align == AlignText.LEFT ? 'flex-start' : font?.align == AlignText.RIGHT ? 'flex-end' : 'center';
     }
     return undefined;
   }, [font?.align, specializations]);
 
-  const getMargin = useMemo(() => {
-    return {
-      marginTop: specializations?.margin?.top ? getProportionedSize(gridSize, specializations.margin.top) : '0px',
-      marginLeft: specializations?.margin?.left ? getProportionedSize(gridSize, specializations.margin.left) : '0px',
-      marginRight: specializations?.margin?.right ? getProportionedSize(gridSize, specializations.margin.right) : '0px',
-      marginBottom: specializations?.margin?.bottom ? getProportionedSize(gridSize, specializations.margin.bottom) : '0px',
-    };
-  }, [gridSize, specializations?.margin?.bottom, specializations?.margin?.left, specializations?.margin?.right, specializations?.margin?.top]);
+  const getTextAlign = useMemo(() => {
+    if (!specializations) {
+      return font?.align == AlignText.LEFT ? 'left' : font?.align == AlignText.RIGHT ? 'right' : 'center';
+    }
+    return undefined;
+  }, [font?.align, specializations]);
 
   const getFontBorder = useMemo(() => {
     if (!font?.fontBorder.isEnabled) return null;
@@ -71,11 +74,10 @@ const useFontStyle = ({ font, gridSize, specializations }: IUseFontStyleProps): 
     fontWeight: getFontWeight,
     color: getColor,
     alignItems: getAlignItems,
-    textAlign: getAlignItems,
+    textAlign: getTextAlign,
     ...getFontBorder,
     lineHeight: getLineHeight,
     letterSpacing: getLetterSpacing,
-    ...getMargin,
   };
   return style;
 };

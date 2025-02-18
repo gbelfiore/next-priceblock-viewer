@@ -3,6 +3,7 @@ import style from './FormatterPricePreview.module.css'
 import classNames from 'classnames'
 import useFontStyle from '../../hooks/useFontStyle'
 import { IPriceBlockFont, EPositionCurrency, EAlignCurrency, typesV2 } from '../types/types'
+import useVerticalOffset from '../../hooks/useVerticaloffset'
 
 interface ICurrencyPreviewProps {
   value?: string
@@ -14,6 +15,7 @@ interface ICurrencyPreviewProps {
 
 const CurrencyPreview = ({ value, font, format, gridSize }: ICurrencyPreviewProps) => {
   const fontStyle = useFontStyle({ font: font, specializations: font?.currencyStyles, gridSize })
+  const marginStyle = useVerticalOffset({ gridSize, verticalOffset: font?.currencyStyles?.verticalOffset })
 
   const getPosition = useMemo(() => {
     if (format?.positionCurrency && [EPositionCurrency.LEFT, EPositionCurrency.RIGHT].includes(format.positionCurrency)) {
@@ -44,7 +46,7 @@ const CurrencyPreview = ({ value, font, format, gridSize }: ICurrencyPreviewProp
   }, [format?.alignCurrency, format?.positionCurrency])
 
   return (
-    <div className={classNames(style.currencyPreview, getPosition)} style={fontStyle}>
+    <div className={classNames(style.currencyPreview, getPosition)} style={{ ...fontStyle, ...marginStyle }}>
       {value}
     </div>
   )

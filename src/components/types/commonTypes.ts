@@ -57,10 +57,11 @@ export interface IPriceBlockPosition {
 export interface IPriceBlockFontElement {
   size?: string;
   style?: FontStyle;
-  lineHeight?: string;
+  // lineHeight?: string;
   letterSpacing?: string;
   color?: string;
-  margin?: IPriceBlockPadding;
+  // margin?: IPriceBlockPadding;
+  verticalOffset?: string;
 }
 
 export interface IPriceBlockFontBorder {
@@ -78,7 +79,7 @@ export interface IPriceBlockFont {
   lineHeight?: string;
   letterSpacing?: string;
   fontBorder: IPriceBlockFontBorder;
-  integerStyles?: IPriceBlockFontElement;
+  // integerStyles?: IPriceBlockFontElement;
   decimalStyles?: IPriceBlockFontElement;
   currencyStyles?: IPriceBlockFontElement;
   prefixStyles?: IPriceBlockFontElement;

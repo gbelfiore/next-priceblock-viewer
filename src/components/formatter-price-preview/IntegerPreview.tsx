@@ -14,7 +14,8 @@ interface IIntegerPreviewProps {
 }
 
 const IntegerPreview = ({ value, thousandSeparator, decimalSeparator, font, format, isRenderDecimal = true, gridSize }: IIntegerPreviewProps) => {
-  const fontStyle = useFontStyle({ font: font, specializations: font?.integerStyles, gridSize })
+  const fontStyle = useFontStyle({ font: font, gridSize })
+
 
   const getIntegerValue = useMemo(() => {
     let integer = value ?? ''
