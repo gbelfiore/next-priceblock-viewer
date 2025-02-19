@@ -5,9 +5,9 @@ import useFontStyle from '../../hooks/useFontStyle';
 import classNames from 'classnames';
 import { DiscountType, IDiscountProperties, IGenericPreviewProps, IPriceBlockElement, IStrikethrough, typesV2 } from '../types/types';
 import { usePriceBlockStore } from '../../zustand/price-block-store';
-import CrossedLine from '../CrossedLine';
-import ChooserPriceFormat from '../chooser-price-format/ChooserPriceFormat';
+import ChooserPriceFormat from '../chooser/ChooserPriceFormat';
 import { isVersionV2 } from '../../utils/VersionUtilis';
+import ChooserCrossedLine from '../chooser/ChooserCrossedLine';
 
 const DiscountPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPreviewProps) => {
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);
@@ -40,10 +40,11 @@ const DiscountPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevie
 
     return (
       <div className={classNames('flex h-full w-full flex-col justify-center')} style={{ ...getStyle, whiteSpace: 'pre-wrap' }}>
+        <ChooserCrossedLine properties={properties} settings={settings} />
         <div dangerouslySetInnerHTML={{ __html: value }} />
       </div>
     );
-  }, [discount, getStyle, properties.percentage]);
+  }, [discount, getStyle, properties, settings]);
 
   const strikethrough = useMemo(() => {
     let strikethrough: IStrikethrough | undefined = undefined
@@ -58,8 +59,6 @@ const DiscountPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevie
 
     return (
       <div className={classNames('flex h-full w-full flex-col justify-center', { relative: strikethrough })} style={getStyle}>
-        <CrossedLine font={properties.font} strikethrough={strikethrough} />
-
         <ChooserPriceFormat
           value={discount}
           gridSize={gridSize}

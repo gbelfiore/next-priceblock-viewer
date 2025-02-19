@@ -46,6 +46,7 @@ const ChooserPriceFormat = (props: IChooserPriceFormatProps) => {
       font={properties.font}
       format={properties.format}
       gridSize={props.gridSize}
+      strikethrough={properties.strikethrough}
     />
 
 

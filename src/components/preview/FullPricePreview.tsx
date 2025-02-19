@@ -5,8 +5,7 @@ import { IFullPriceProperties, IGenericPreviewProps, IPriceBlockElement } from '
 import useBoxStyle from '../../hooks/useBoxStyle';
 import useFontStyle from '../../hooks/useFontStyle';
 import { usePriceBlockStore } from '../../zustand/price-block-store';
-import CrossedLine from '../CrossedLine';
-import ChooserPriceFormat from '../chooser-price-format/ChooserPriceFormat';
+import ChooserPriceFormat from '../chooser/ChooserPriceFormat';
 
 const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPreviewProps) => {
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);
@@ -31,7 +30,6 @@ const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevi
 
   return (
     <div className={classNames('flex h-full w-full flex-col justify-center', { relative: properties.strikethrough })} style={getStyle}>
-      <CrossedLine font={properties.font} strikethrough={properties.strikethrough} />
       <ChooserPriceFormat
         value={fullPrice}
         gridSize={gridSize}

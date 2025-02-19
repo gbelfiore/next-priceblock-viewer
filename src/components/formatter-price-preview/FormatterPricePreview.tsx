@@ -7,8 +7,9 @@ import IntegerPreview from './IntegerPreview'
 import CurrencyPreview from './CurrencyPreview'
 import DecimalPreview from './DecimalPreview'
 import { cleanAndSplitPrice } from '../../utils/priceUtils'
-import { EPositionCurrency, IPriceBlockFont, typesV2 } from '../types/types'
+import { EPositionCurrency, IPriceBlockFont, IStrikethrough, typesV2 } from '../types/types'
 import { isRenderDecimalCheck, getGridInfo, EComponents, IColPosition, IRowPosition } from '../../utils/previewGridUtils'
+import CrossedLine from '../CrossedLine'
 
 
 const foundElements = (obj: IColPosition | IRowPosition, value: number): string[] => {
@@ -27,6 +28,8 @@ interface IFormatterPricePreviewProps {
   font?: IPriceBlockFont
   format?: typesV2.IPriceBlockFormat
   gridSize: number;
+  strikethrough?: IStrikethrough
+
 }
 
 const FormatterPricePreview = ({
@@ -38,7 +41,8 @@ const FormatterPricePreview = ({
   decimalSeparator,
   font,
   format,
-  gridSize
+  gridSize,
+  strikethrough
 }: IFormatterPricePreviewProps) => {
   const valueString = cleanAndSplitPrice(value)
   const isRenderDecimal = isRenderDecimalCheck(value, format?.hideDecimalsForInteger)
@@ -47,6 +51,8 @@ const FormatterPricePreview = ({
 
   const refGrid = useRef<HTMLDivElement>(null)
   const refEmptyCell = useRef<HTMLDivElement>(null)
+  const refCrossedLine = useRef<HTMLDivElement>(null)
+
 
   const getComponents = useCallback(
     (key: EComponents) => {
@@ -96,19 +102,35 @@ const FormatterPricePreview = ({
   }, [getComponents, gridInfo.colPosition, gridInfo.columns, gridInfo.rowPosition, gridInfo.rows])
 
   useEffect(() => {
-    if (refEmptyCell.current && refGrid.current) {
-      let top = '0px', position = 'unset'
-      if (format?.positionCurrency && [EPositionCurrency.TOP, EPositionCurrency.BOTTOM].includes(format.positionCurrency)) {
-        const height = refEmptyCell.current.offsetHeight
-        const offset = ((format.positionCurrency == EPositionCurrency.BOTTOM ? 1 : -1) * height / 2)
-        top = `${offset}px`
-        position = 'relative'
-      } else {
-        top = `0px`
-        position = 'unset'
+    let top = '0px', topCrossedLine = '50%', widthCrossedLine = '100%', position = 'unset'
+    if (refGrid.current) {
+      if (refEmptyCell.current) {
+
+        if (format?.positionCurrency && [EPositionCurrency.TOP, EPositionCurrency.BOTTOM].includes(format.positionCurrency)) {
+          const height = refEmptyCell.current.offsetHeight
+          const offset = ((format.positionCurrency == EPositionCurrency.BOTTOM ? 1 : -1) * height / 2)
+          top = `${offset}px`
+          position = 'relative'
+          topCrossedLine = (format.positionCurrency == EPositionCurrency.BOTTOM ? '25%' : '75%')
+
+        } else {
+          top = `0px`
+          position = 'unset'
+          topCrossedLine = '50%'
+        }
       }
+
+      if (refCrossedLine.current) {
+        widthCrossedLine = refGrid.current.offsetWidth ? `${refGrid.current.offsetWidth}px` : '100%'
+      }
+
       refGrid.current.style.top = top
       refGrid.current.style.position = position
+      if (refCrossedLine.current) {
+        refCrossedLine.current.style.width = widthCrossedLine
+        refCrossedLine.current.style.top = topCrossedLine
+      }
+
     }
   }, [format?.positionCurrency, font?.size, font?.currencyStyles?.size])
 
@@ -118,6 +140,7 @@ const FormatterPricePreview = ({
       style={{ gridTemplateColumns: `repeat(${gridInfo.columns}, auto)`, gridTemplateRows: `repeat(${gridInfo.rows}, auto)` }}
       ref={refGrid}
     >
+      <CrossedLine ref={refCrossedLine} font={font} strikethrough={strikethrough} />
       {renderCells()}
     </div >
   )

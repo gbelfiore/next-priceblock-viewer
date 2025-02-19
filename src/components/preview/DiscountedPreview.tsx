@@ -5,8 +5,7 @@ import useFontStyle from '../../hooks/useFontStyle';
 import { usePriceBlockStore } from '../../zustand/price-block-store';
 import { IDiscountedProperties, IGenericPreviewProps, IPriceBlockElement, IStrikethrough, typesV2 } from '../types/types';
 import classNames from 'classnames';
-import CrossedLine from '../CrossedLine';
-import ChooserPriceFormat from '../chooser-price-format/ChooserPriceFormat';
+import ChooserPriceFormat from '../chooser/ChooserPriceFormat';
 import { isVersionV2 } from '../../utils/VersionUtilis';
 
 const DiscountedPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPreviewProps) => {
@@ -40,8 +39,6 @@ const DiscountedPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrev
 
   return (
     <div className={classNames('flex h-full w-full flex-col justify-center', { relative: strikethrough })} style={getStyle}>
-      <CrossedLine font={properties.font} strikethrough={strikethrough} />
-
       <ChooserPriceFormat
         value={discounted}
         gridSize={gridSize}
