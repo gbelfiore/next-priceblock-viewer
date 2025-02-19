@@ -12,7 +12,7 @@ const CrossedLine = ({ strikethrough, font }: ICrossedLienProps) => {
     transform: `rotate(${strikethrough.angle}deg)`,
     height: `${strikethrough.height}px`,
   }
-  return <div className='absolute w-[90%]' style={style}></div>
+  return <div className='absolute w-[90%] z-[2]' style={style}></div>
 }
 
 export default CrossedLine

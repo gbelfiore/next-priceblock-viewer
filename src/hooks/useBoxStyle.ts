@@ -17,18 +17,20 @@ const useBoxStyle = ({ basePath, box, gridSize }: IUseBoxStyleProps): CSSPropert
   };
 
   if (box?.border?.thickness) {
+    const borderStyle = box.border.style ?? 'solid';
+
     style = {
       ...style,
-      borderTop: `${box?.border?.thickness.top ? getProportionedSize(gridSize, box?.border?.thickness.top) : '0px'} solid ${
+      borderTop: `${box?.border?.thickness.top ? getProportionedSize(gridSize, box?.border?.thickness.top) : '0px'} ${borderStyle} ${
         box?.border?.color ?? 'transparent'
       }`,
-      borderLeft: `${box?.border?.thickness.left ? getProportionedSize(gridSize, box?.border.thickness.left) : '0px'} solid ${
+      borderLeft: `${box?.border?.thickness.left ? getProportionedSize(gridSize, box?.border.thickness.left) : '0px'} ${borderStyle} ${
         box?.border?.color ?? 'transparent'
       }`,
-      borderBottom: `${box?.border?.thickness.bottom ? getProportionedSize(gridSize, box?.border?.thickness.bottom) : '0'} solid ${
+      borderBottom: `${box?.border?.thickness.bottom ? getProportionedSize(gridSize, box?.border?.thickness.bottom) : '0'} ${borderStyle} ${
         box?.border?.color ?? 'transparent'
       }`,
-      borderRight: `${box?.border?.thickness.right ? getProportionedSize(gridSize, box?.border?.thickness.right) : '0'} solid ${
+      borderRight: `${box?.border?.thickness.right ? getProportionedSize(gridSize, box?.border?.thickness.right) : '0'} ${borderStyle} ${
         box?.border?.color ?? 'transparent'
       }`,
     };
