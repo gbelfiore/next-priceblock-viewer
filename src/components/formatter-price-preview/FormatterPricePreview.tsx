@@ -132,7 +132,8 @@ const FormatterPricePreview = ({
       }
 
     }
-  }, [format?.positionCurrency, font?.size, font?.currencyStyles?.size])
+    //important deps format?.positionCurrency, font?.size, font?.currencyStyles?.size, strikethrough
+  }, [format?.positionCurrency, font?.size, font?.currencyStyles?.size, strikethrough])
 
   return (
     <div
