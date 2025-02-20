@@ -37,12 +37,11 @@ const useFontStyle = ({ font, gridSize, specializations }: IUseFontStyleProps): 
 
   const getFontStyle = useMemo(() => {
     const style = specializations?.style ?? font?.style;
-    return style != FontStyle.BOLD ? font?.style : 'normal';
-  }, [font?.style, specializations?.style]);
-
-  const getFontWeight = useMemo(() => {
-    const weight = specializations?.style ?? font?.style;
-    return weight == FontStyle.BOLD ? 'bold' : 'normal';
+    if (style == FontStyle.BOLD) {
+      return { fontWeight: 'bold', fontStyle: 'normal' };
+    } else {
+      return { fontWeight: 'normal', fontStyle: style };
+    }
   }, [font?.style, specializations?.style]);
 
   const getAlignItems = useMemo(() => {
@@ -67,17 +66,29 @@ const useFontStyle = ({ font, gridSize, specializations }: IUseFontStyleProps): 
     };
   }, [font?.fontBorder?.color, font?.fontBorder.isEnabled, font?.fontBorder?.width, gridSize]);
 
+  const getTextShadow = useMemo(() => {
+    if (font?.shadow) {
+      return {
+        textShadow: `${getProportionedSize(gridSize, font?.shadow?.offsetX)} ${getProportionedSize(
+          gridSize,
+          font?.shadow?.offsetY
+        )} ${getProportionedSize(gridSize, font?.shadow?.blur)} ${font?.shadow?.color}`,
+      };
+    }
+    return {};
+  }, [font?.shadow, gridSize]);
+
   const style: CSSProperties = {
     fontFamily: font?.family,
     fontSize: getFontSize,
-    fontStyle: getFontStyle,
-    fontWeight: getFontWeight,
+    ...getFontStyle,
     color: getColor,
     alignItems: getAlignItems,
     textAlign: getTextAlign,
     ...getFontBorder,
     lineHeight: getLineHeight,
     letterSpacing: getLetterSpacing,
+    ...getTextShadow,
   };
   return style;
 };

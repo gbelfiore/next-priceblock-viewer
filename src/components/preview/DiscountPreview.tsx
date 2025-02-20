@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import useBoxStyle from '../../hooks/useBoxStyle';
 import useFontStyle from '../../hooks/useFontStyle';
 import classNames from 'classnames';
@@ -7,9 +7,12 @@ import { DiscountType, IDiscountProperties, IGenericPreviewProps, IPriceBlockEle
 import { usePriceBlockStore } from '../../zustand/price-block-store';
 import ChooserPriceFormat from '../chooser/ChooserPriceFormat';
 import { isVersionV2 } from '../../utils/VersionUtilis';
-import ChooserCrossedLine from '../chooser/ChooserCrossedLine';
+import CrossedLine from '../CrossedLine';
 
 const DiscountPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPreviewProps) => {
+  const refCrossedLine = useRef<HTMLDivElement>(null);
+  const refComponent = useRef<HTMLDivElement>(null);
+
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);
   const basePath = priceBlockComp?.priceBlock.basePath;
 
@@ -26,6 +29,20 @@ const DiscountPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevie
     return { ...boxStyle, ...fontStyle };
   }, [boxStyle, fontStyle]);
 
+  useEffect(() => {
+    let widthCrossedLine = '100%';
+
+    if (refComponent.current) {
+      if (refCrossedLine.current) {
+        widthCrossedLine = refComponent.current.offsetWidth ? `${refComponent.current.offsetWidth}px` : '100%';
+      }
+
+      if (refCrossedLine.current) {
+        refCrossedLine.current.style.width = widthCrossedLine;
+      }
+    }
+  }, [properties.font.size, properties.strikethrough]);
+
   const renderDiscountSamePercentage = useMemo(() => {
     if (!discount) return null;
 
@@ -40,18 +57,18 @@ const DiscountPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevie
 
     return (
       <div className={classNames('flex h-full w-full flex-col justify-center')} style={{ ...getStyle, whiteSpace: 'pre-wrap' }}>
-        <ChooserCrossedLine properties={properties} settings={settings} />
-        <div dangerouslySetInnerHTML={{ __html: value }} />
+        <CrossedLine ref={refCrossedLine} font={properties.font} strikethrough={properties?.strikethrough} gridSize={gridSize} />
+        <div ref={refComponent} dangerouslySetInnerHTML={{ __html: value }} />
       </div>
     );
-  }, [discount, getStyle, properties, settings]);
+  }, [discount, getStyle, gridSize, properties]);
 
   const strikethrough = useMemo(() => {
-    let strikethrough: IStrikethrough | undefined = undefined
+    let strikethrough: IStrikethrough | undefined = undefined;
     if (isVersionV2(settings)) {
-      strikethrough = (properties as typesV2.IDiscountProperties).strikethrough
+      strikethrough = (properties as typesV2.IDiscountProperties).strikethrough;
     }
-    return strikethrough
+    return strikethrough;
   }, [properties, settings]);
 
   const renderDiscountSamePrice = useMemo(() => {
@@ -59,12 +76,7 @@ const DiscountPreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevie
 
     return (
       <div className={classNames('flex h-full w-full flex-col justify-center', { relative: strikethrough })} style={getStyle}>
-        <ChooserPriceFormat
-          value={discount}
-          gridSize={gridSize}
-          settings={settings}
-          properties={properties}
-        />
+        <ChooserPriceFormat value={discount} gridSize={gridSize} settings={settings} properties={properties} />
       </div>
     );
   }, [discount, getStyle, gridSize, properties, settings, strikethrough]);

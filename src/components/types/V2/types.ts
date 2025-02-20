@@ -1,4 +1,4 @@
-import { ESeparator, EAlignDecimal, EPositionCurrency, EAlignCurrency, EAlignPrefix, EAlignSuffix, IStrikethrough, ISeparators } from '../types';
+import { ESeparator, EAlignDecimal, EPositionCurrency, EAlignCurrency, EAlignPrefix, EAlignSuffix, ISeparators } from '../types';
 import * as typesV1 from '../V1/types';
 
 export interface ICurrency extends Omit<typesV1.ICurrency, 'show'> {
@@ -24,13 +24,11 @@ export interface IFullPriceProperties extends Omit<typesV1.IFullPriceProperties,
 }
 
 export interface IDiscountProperties extends Omit<typesV1.IDiscountProperties, 'separators' | 'format' | 'currency'> {
-  strikethrough?: IStrikethrough;
   format: IPriceBlockFormat;
   currency?: ICurrency;
 }
 
 export interface IDiscountedProperties extends Omit<typesV1.IDiscountedProperties, 'separators' | 'format' | 'currency'> {
-  strikethrough?: IStrikethrough;
   format: IPriceBlockFormat;
   currency: ICurrency;
 }

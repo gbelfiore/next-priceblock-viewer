@@ -33,6 +33,7 @@ export interface IDiscountProperties {
   format?: IPriceBlockFormat;
   separators?: ISeparators;
   currency?: ICurrency;
+  strikethrough?: IStrikethrough;
 }
 
 export interface IDiscountedProperties {
@@ -42,6 +43,7 @@ export interface IDiscountedProperties {
   box?: IPriceBlockBox;
   separators: ISeparators;
   currency: ICurrency;
+  strikethrough?: IStrikethrough;
 }
 
 export interface IPriceBlockSettings {

@@ -84,6 +84,7 @@ export interface IPriceBlockFont {
   currencyStyles?: IPriceBlockFontElement;
   prefixStyles?: IPriceBlockFontElement;
   suffixStyles?: IPriceBlockFontElement;
+  shadow?: IPriceBlockShadow;
 }
 
 export type Separator = '.' | ',' | undefined;
@@ -173,8 +174,8 @@ export interface IBadgeProperties {
 }
 
 export interface IStrikethrough {
-  angle: number;
-  height: number;
+  angle: string;
+  height: string;
   color?: string;
 }
 
