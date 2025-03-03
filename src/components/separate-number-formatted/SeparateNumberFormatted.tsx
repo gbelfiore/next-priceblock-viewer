@@ -1,5 +1,5 @@
 import { SeparateNumber } from '../separate-number/SeparateNumber';
-import { PriceFormatType } from '../types';
+import { PriceFormatType } from '../types/types';
 import { useFormattedCurrencyStyle } from './useFormattedCurrencyStyle';
 
 enum SeparateNumberFormattedType {
@@ -18,7 +18,6 @@ type ISeparateNumberFormattedProps = {
   thousandSeparator?: string;
   showCurrency?: boolean;
   value?: number | string;
-  onChangePriceFormat?: (value?: PriceFormatType) => void;
   gridSize: number;
   hideDecimalsForInteger?: boolean;
 };
@@ -28,7 +27,6 @@ const SeparateNumberFormatted = ({
   fontSize,
   type,
   className,
-  onChangePriceFormat,
   decimalSeparator,
   thousandSeparator,
   currency,
@@ -58,7 +56,6 @@ const SeparateNumberFormatted = ({
         decimalStyle,
       }}
       currencyPosition={type === PriceFormatType.TYPE4 ? 'left' : 'right'}
-      onClick={() => onChangePriceFormat && onChangePriceFormat(type)}
       currency={currency}
       decimalSeparator={decimalSeparator}
       thousandSeparator={thousandSeparator}

@@ -1,11 +1,11 @@
 import type { CSSProperties } from 'react';
 import { useMemo } from 'react';
 import classNames from 'classnames';
-import { IFullPriceProperties, IGenericPreviewProps, IPriceBlockElement } from '../types';
-import SeparateNumberFormatted from '../separate-number-formatted/SeparateNumberFormatted';
+import { IFullPriceProperties, IGenericPreviewProps, IPriceBlockElement } from '../types/types';
 import useBoxStyle from '../../hooks/useBoxStyle';
 import useFontStyle from '../../hooks/useFontStyle';
 import { usePriceBlockStore } from '../../zustand/price-block-store';
+import ChooserPriceFormat from '../chooser/ChooserPriceFormat';
 
 const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPreviewProps) => {
   const priceBlockComp = usePriceBlockStore((state) => state.dataComp[priceBlockKey]);
@@ -13,6 +13,7 @@ const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevi
 
   const gridSize = priceBlockComp?.gridSize;
   const { priceBlock, valuePriceBLock } = priceBlockComp;
+  const settings = priceBlock.jsonConf.settings
   const { properties } = priceBlock.jsonConf.priceBlockElements[priceBlockElementKey] as IPriceBlockElement<IFullPriceProperties>;
   const boxStyle = useBoxStyle({ basePath, gridSize, box: properties?.box });
   const fontStyle = useFontStyle({ gridSize, font: properties?.font });
@@ -23,33 +24,17 @@ const FullPricePreview = ({ priceBlockKey, priceBlockElementKey }: IGenericPrevi
     return { ...boxStyle, ...fontStyle };
   }, [boxStyle, fontStyle]);
 
-  const renderStrikethrough = useMemo(() => {
-    if (!properties?.strikethrough) return null;
-    const style: CSSProperties = {
-      backgroundColor: properties.strikethrough.color || properties.font.color || '#000',
-      transform: `rotate(${properties.strikethrough?.angle ?? ''}deg)`,
-      height: `${properties.strikethrough?.height}px`,
-      width: '90%',
-      position: 'absolute',
-    };
-    return <div style={style}></div>;
-  }, [properties]);
+
 
   if (!properties || !fullPrice) return null;
 
   return (
     <div className={classNames('flex h-full w-full flex-col justify-center', { relative: properties.strikethrough })} style={getStyle}>
-      {renderStrikethrough}
-      <SeparateNumberFormatted
-        thousandSeparator={properties.separators?.thousand}
-        decimalSeparator={properties.separators?.decimal}
-        showCurrency={properties.currency?.show}
-        currency={properties.currency?.value}
-        fontSize={properties.font.size}
+      <ChooserPriceFormat
         value={fullPrice}
-        type={properties.format?.isEnable ? properties.format.type : undefined}
         gridSize={gridSize}
-        hideDecimalsForInteger={properties.format.hideDecimalsForInteger}
+        settings={settings}
+        properties={properties}
       />
     </div>
   );

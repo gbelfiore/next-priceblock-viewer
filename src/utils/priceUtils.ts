@@ -20,12 +20,14 @@ function recognizeSeparators(price: string) {
   return null;
 }
 
-const cleanAndSplitPrice = (value: string | number): [string, string] | undefined => {
-  const strValue = value.toString().replace(',', '.');
-  const numberValue = parseFloat(strValue);
-  if (isNaN(numberValue)) return undefined;
-  const formattedValue = numberValue.toLocaleString('it-IT', { minimumIntegerDigits: 1, minimumFractionDigits: 2 });
-  const [integerPart, decimalPart] = formattedValue.split(',');
-  return [integerPart, decimalPart];
-};
+const cleanAndSplitPrice = (value?: string | number): [string, string] | undefined => {
+  if (!value) return undefined
+  const strValue = value.toString().replace(',', '.')
+  const numberValue = parseFloat(strValue)
+  if (isNaN(numberValue)) return undefined
+  const formattedValue = numberValue.toLocaleString('it-IT', { minimumIntegerDigits: 1, minimumFractionDigits: 2 })
+  const [integerPart, decimalPart] = formattedValue.split(',')
+  return [integerPart, decimalPart]
+}
+
 export { recognizeSeparators, cleanAndSplitPrice };

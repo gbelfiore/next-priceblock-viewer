@@ -1,5 +1,5 @@
 import { useMemo, CSSProperties, FC } from 'react';
-import { DynamicPriceBlockElementKey, IGenericPreviewProps, PriceBlockElementKey } from './types';
+import { DynamicPriceBlockElementKey, IGenericPreviewProps, PriceBlockElementKey } from './types/types';
 import FullPricePreview from './preview/FullPricePreview';
 import BadgePreview from './preview/BadgePreview';
 import CustomFieldPreview from './preview/CustomFieldPreview';
