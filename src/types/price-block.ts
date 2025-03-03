@@ -1,4 +1,4 @@
-import { IPriceBlockElements, IPriceBlockSettings } from '../components/types';
+import { IPriceBlockElements, IPriceBlockSettings } from '../components/types/types';
 
 interface PriceBlock {
   _id: string;

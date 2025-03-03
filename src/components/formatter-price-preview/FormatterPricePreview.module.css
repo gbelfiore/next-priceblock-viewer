@@ -1,0 +1,47 @@
+.formatterPricePreview {
+  /* @apply h-full w-full; */
+  @apply grid grid-flow-col;
+}
+
+.cell {
+  @apply justify-center;
+  @apply flex items-center;
+  /* @apply border border-solid border-[#333] bg-[sky]; */
+  /* @apply relative; */
+}
+
+/* ---------------------------- */
+
+.prefixPreview {
+  @apply h-full w-full;
+  @apply flex flex-col;
+  @apply shrink-0;
+  @apply relative;
+}
+
+.suffixPreview {
+  @apply h-full w-full;
+  @apply flex flex-col;
+  @apply shrink-0;
+  @apply relative;
+}
+
+.integerPreview {
+  @apply h-full w-full;
+  @apply flex flex-col items-center justify-center;
+  @apply shrink-0;
+}
+
+.currencyPreview {
+  @apply h-full w-full;
+  @apply flex flex-col;
+  @apply shrink grow;
+  @apply relative;
+}
+
+.decimalPreview {
+  @apply h-full w-full;
+  @apply flex flex-col items-center;
+  @apply shrink grow;
+  @apply relative;
+}
