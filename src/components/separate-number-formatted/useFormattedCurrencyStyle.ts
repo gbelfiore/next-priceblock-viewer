@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import type { CSSProperties } from 'react';
-import { PriceFormatType } from '../types';
+import { PriceFormatType } from '../types/types';
 import { getProportionedSize } from '../../hooks/get-proportioned-size';
 
 type Props = {
