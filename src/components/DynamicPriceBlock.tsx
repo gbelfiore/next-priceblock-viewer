@@ -14,6 +14,7 @@ interface DynamicPriceBlockProps {
     discount?: string;
     unitType?: string;
     textCustom?: { id: string; value: string }[];
+    customBadgeUrl?: string;
   };
 }
 
@@ -55,8 +56,7 @@ const DynamicPriceBlock = ({ priceBlock, priceBlockKey, gridSize, valuePriceBLoc
         background: getBackground,
         height: priceBlockComp.priceBlock.numRows * priceBlockComp.gridSize,
         width: priceBlockComp.priceBlock.numCols * priceBlockComp.gridSize,
-      }}
-    >
+      }}>
       <Elements priceBlockKey={priceBlockKey} />
     </div>
   );

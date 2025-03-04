@@ -17,6 +17,7 @@ const lookupContent: Partial<LookupElement> = {
   [PriceBlockElementKey.DISCOUNT]: DiscountPreview,
   [PriceBlockElementKey.DISCOUNTED]: DiscountedPreview,
   [PriceBlockElementKey.BADGE]: BadgePreview,
+  [PriceBlockElementKey.CUSTOM_BADGE]: BadgePreview,
   [PriceBlockElementKey.UNIT_TYPE]: UnitTypePreview,
 };
 

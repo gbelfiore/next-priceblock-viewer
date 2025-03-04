@@ -9,6 +9,7 @@ interface PriceBlockStoreStateItemValue {
   discounted?: string;
   unitType?: string;
   textCustom?: Array<{ id: string; value: string }>;
+  customBadgeUrl?: string;
 }
 
 interface PriceBlockStoreStateItem {
