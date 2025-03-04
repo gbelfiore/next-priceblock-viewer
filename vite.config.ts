@@ -7,6 +7,9 @@ import autoprefixer from 'autoprefixer';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    port: 5173, // Questo è per la modalità di sviluppo locale, non influisce su Amplify
+  },
   plugins: [react(), dts()],
   css: {
     postcss: {
@@ -22,6 +25,7 @@ export default defineConfig({
   //   },
   // },
   build: {
+    outDir: 'dist', // Vite crea i file di build nella cartella 'dist'
     lib: {
       entry: path.resolve(__dirname, 'index.ts'),
       name: 'next-priceblock-viewer-package',
