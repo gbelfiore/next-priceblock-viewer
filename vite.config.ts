@@ -25,10 +25,10 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'index.ts'),
       name: 'next-priceblock-viewer-package',
-      fileName: (format) => {
-        console.log(format);
-        return 'next-priceblock-viewer' + (format == 'umd' ? '.umd.cjs' : '.js');
-      },
+      // fileName: (format) => {
+      //   console.log(format);
+      //   return 'next-priceblock-viewer' + (format == 'umd' ? '.umd.cjs' : '.js');
+      // },
     },
     rollupOptions: {
       external: ['react', 'react-dom', 'zustand'],
