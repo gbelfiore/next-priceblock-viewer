@@ -26,22 +26,22 @@ export default defineConfig({
   // },
   build: {
     outDir: 'dist', // Vite crea i file di build nella cartella 'dist'
-    lib: {
-      entry: path.resolve(__dirname, 'index.ts'),
-      name: 'next-priceblock-viewer-package',
-      fileName: (format) => 'index' + format + 'js',
-    },
-    rollupOptions: {
-      external: ['react', 'react-dom', 'zustand'],
-      output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          zustand: 'zustand',
-        },
-      },
-    },
-    sourcemap: true,
+    // lib: {
+    //   entry: path.resolve(__dirname, 'index.ts'),
+    //   name: 'next-priceblock-viewer-package',
+    //   fileName: (format) => 'index' + format + 'js',
+    // },
+    // rollupOptions: {
+    //   external: ['react', 'react-dom', 'zustand'],
+    //   output: {
+    //     globals: {
+    //       react: 'React',
+    //       'react-dom': 'ReactDOM',
+    //       zustand: 'zustand',
+    //     },
+    //   },
+    // },
+    // sourcemap: true,
     emptyOutDir: true,
   },
 });
