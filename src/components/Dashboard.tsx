@@ -72,7 +72,8 @@ export function Dashboard() {
   const [currentEnv, setCurrentEnv] = useState(0);
   const [currentPriceBlockIndex, setCurrentPriceBlockIndex] = useState<number | undefined>(undefined);
 
-  const [gridSize, setGridSize] = useState(11);
+  const [gridSize, setGridSize] = useState<number>(11);
+  const [customBadgeUrl, setCustomBadgeUrl] = useState<string>('https://antennisti.roma.it/wp-content/uploads/2019/10/nessun-segnale-tv.jpg');
 
   const customFields = [
     { id: 'customfield_1', value: 'custom text 1' },
@@ -101,8 +102,7 @@ export function Dashboard() {
                     disabled={isLoading}
                     onValueChange={(e) => {
                       setCurrentEnv(parseInt(e));
-                    }}
-                  >
+                    }}>
                     <SelectTrigger id="model" className="items-start [&_[data-description]]:hidden">
                       <SelectValue placeholder="Select a Price Block" />
                     </SelectTrigger>
@@ -134,8 +134,7 @@ export function Dashboard() {
                       setLoading(false);
                     }}
                     type="submit"
-                    className=""
-                  >
+                    className="">
                     load env
                   </Button>
                 </div>
@@ -146,8 +145,7 @@ export function Dashboard() {
                     onValueChange={(e) => {
                       console.error({ e });
                       setCurrentPriceBlockIndex(parseInt(e));
-                    }}
-                  >
+                    }}>
                     <SelectTrigger id="model" className="items-start [&_[data-description]]:hidden">
                       <SelectValue placeholder="Select a Price Block" />
                     </SelectTrigger>
@@ -185,6 +183,17 @@ export function Dashboard() {
                     disabled={isLoading}
                   />
                 </div>
+                <div className="grid gap-3">
+                  <Label htmlFor="temperature">Custom badge</Label>
+                  <Input
+                    onChange={(e) => {
+                      setCustomBadgeUrl(e.target.value);
+                    }}
+                    value={customBadgeUrl}
+                    type="text"
+                    disabled={isLoading}
+                  />
+                </div>
                 <div className="grid grid-cols-2 gap-4"></div>
               </fieldset>
             </form>
@@ -214,6 +223,7 @@ export function Dashboard() {
                     discounted: '44,90',
                     unitType: 'al kg',
                     textCustom: customFields,
+                    customBadgeUrl: customBadgeUrl,
                   }}
                 />
               ) : null}
@@ -221,8 +231,7 @@ export function Dashboard() {
 
             <form
               className="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring"
-              x-chunk="dashboard-03-chunk-1"
-            >
+              x-chunk="dashboard-03-chunk-1">
               <Label htmlFor="message" className="sr-only">
                 Message
               </Label>
