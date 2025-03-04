@@ -27,7 +27,7 @@ export default defineConfig({
       name: 'next-priceblock-viewer-package',
       fileName: (format) => {
         console.log(format);
-        return 'index.' + format + '.js';
+        return 'index' + (format == 'umd' ? '.umd.' : '.') + 'js';
       },
     },
     rollupOptions: {
