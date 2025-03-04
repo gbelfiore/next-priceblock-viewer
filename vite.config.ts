@@ -1,15 +1,12 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
-// import path from 'path';
+import path from 'path';
 import dts from 'vite-plugin-dts';
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: {
-    port: 5173, // Questo è per la modalità di sviluppo locale, non influisce su Amplify
-  },
   plugins: [react(), dts()],
   css: {
     postcss: {
@@ -25,23 +22,25 @@ export default defineConfig({
   //   },
   // },
   build: {
-    outDir: 'dist', // Vite crea i file di build nella cartella 'dist'
-    // lib: {
-    //   entry: path.resolve(__dirname, 'index.ts'),
-    //   name: 'next-priceblock-viewer-package',
-    //   fileName: (format) => 'index' + format + 'js',
-    // },
-    // rollupOptions: {
-    //   external: ['react', 'react-dom', 'zustand'],
-    //   output: {
-    //     globals: {
-    //       react: 'React',
-    //       'react-dom': 'ReactDOM',
-    //       zustand: 'zustand',
-    //     },
-    //   },
-    // },
-    // sourcemap: true,
+    lib: {
+      entry: path.resolve(__dirname, 'index.ts'),
+      name: 'next-priceblock-viewer-package',
+      fileName: (format) => {
+        console.log(format);
+        return 'index.' + format + '.js';
+      },
+    },
+    rollupOptions: {
+      external: ['react', 'react-dom', 'zustand'],
+      output: {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+          zustand: 'zustand',
+        },
+      },
+    },
+    sourcemap: true,
     emptyOutDir: true,
   },
 });
