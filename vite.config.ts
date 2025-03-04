@@ -30,16 +30,16 @@ export default defineConfig({
       //   return 'next-priceblock-viewer' + (format == 'umd' ? '.umd.cjs' : '.js');
       // },
     },
-    rollupOptions: {
-      external: ['react', 'react-dom', 'zustand'],
-      output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          zustand: 'zustand',
-        },
-      },
-    },
+    // rollupOptions: {
+    //   external: ['react', 'react-dom', 'zustand'],
+    //   output: {
+    //     globals: {
+    //       react: 'React',
+    //       'react-dom': 'ReactDOM',
+    //       zustand: 'zustand',
+    //     },
+    //   },
+    // },
     sourcemap: true,
     emptyOutDir: true,
   },
