@@ -6,41 +6,67 @@ import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react(), dts()],
-  css: {
-    postcss: {
-      plugins: [tailwindcss(), autoprefixer()],
+export default defineConfig(() => {
+  const config = {
+    plugins: [react(), dts()],
+    css: {
+      postcss: {
+        plugins: [tailwindcss(), autoprefixer()],
+      },
     },
-  },
-  // resolve: {
-  //   alias: {
-  //     '@': path.resolve(__dirname, './src'),
-  //     '@/components': path.resolve(__dirname, './src/components'),
-  //     '@/utils': path.resolve(__dirname, './src/utils'),
-  //     '@/zustand': path.resolve(__dirname, './src/zustand'),
-  //   },
-  // },
-  build: {
-    lib: {
-      entry: path.resolve(__dirname, 'index.ts'),
-      name: 'next-priceblock-viewer-package',
-      // fileName: (format) => {
-      //   console.log(format);
-      //   return 'next-priceblock-viewer' + (format == 'umd' ? '.umd.cjs' : '.js');
-      // },
-    },
-    // rollupOptions: {
-    //   external: ['react', 'react-dom', 'zustand'],
-    //   output: {
-    //     globals: {
-    //       react: 'React',
-    //       'react-dom': 'ReactDOM',
-    //       zustand: 'zustand',
-    //     },
+    // resolve: {
+    //   alias: {
+    //     '@': path.resolve(__dirname, './src'),
+    //     '@/components': path.resolve(__dirname, './src/components'),
+    //     '@/utils': path.resolve(__dirname, './src/utils'),
+    //     '@/zustand': path.resolve(__dirname, './src/zustand'),
     //   },
     // },
-    // sourcemap: true,
-    emptyOutDir: true,
-  },
+    build: {
+      // lib: {
+      //   entry: path.resolve(__dirname, 'index.ts'),
+      //   name: 'next-priceblock-viewer-package',
+      //   fileName: (format: string) => {
+      //     console.log(format);
+      //     return 'next-priceblock-viewer' + (format == 'umd' ? '.umd.cjs' : '.js');
+      //   },
+      // },
+      // rollupOptions: {
+      //   external: ['react', 'react-dom', 'zustand'],
+      //   output: {
+      //     globals: {
+      //       react: 'React',
+      //       'react-dom': 'ReactDOM',
+      //       zustand: 'zustand',
+      //     },
+      //   },
+      // },
+      sourcemap: true,
+      emptyOutDir: true,
+    },
+  };
+
+  if (process.env.MY_BUILD == 'build') {
+    config.build.lib = {
+      entry: path.resolve(__dirname, 'index.ts'),
+      name: 'next-priceblock-viewer-package',
+      fileName: (format: string) => {
+        console.log(format);
+        return 'next-priceblock-viewer' + (format == 'umd' ? '.umd.cjs' : '.js');
+      },
+    };
+
+    config.build.rollupOptions = {
+      external: ['react', 'react-dom', 'zustand'],
+      output: {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+          zustand: 'zustand',
+        },
+      },
+    };
+  }
+
+  return config;
 });
