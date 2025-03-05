@@ -182,7 +182,7 @@ export function Dashboard() {
                 )}
               </fieldset>
 
-              {priceBlocks && (
+              {currentPriceBlockIndex && (
                 <fieldset className="grid gap-6 rounded-lg border p-4">
                   <legend className="-ml-1 px-1 text-sm font-medium">Data for render</legend>
 
