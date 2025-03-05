@@ -20,6 +20,7 @@ function BadgePreview({ priceBlockKey, priceBlockElementKey }: IGenericPreviewPr
 
   const getStyle = useMemo((): CSSProperties => {
     const style: CSSProperties = {
+      // backgroundColor: 'red',
       // backgroundImage: !isEmpty(properties.url) && backgroundUrl ? `url("${backgroundUrl}")` : 'none',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
@@ -36,7 +37,18 @@ function BadgePreview({ priceBlockKey, priceBlockElementKey }: IGenericPreviewPr
     return style;
   }, [backgroundUrl, isBadge, isCustomBadge, properties.rotate, properties.size, properties.url, valuePriceBLock.customBadgeUrl]);
 
-  return <div className="z-100 relative flex h-full w-full items-center justify-center" style={getStyle}></div>;
+  const renderBadge = useMemo(() => {
+    if (isBadge) {
+      return <div className="z-100 relative flex h-full w-full items-center justify-center" style={getStyle}></div>;
+    } else if (isCustomBadge) {
+      if (!isEmpty(valuePriceBLock.customBadgeUrl)) {
+        return <div className="z-100 relative flex h-full w-full items-center justify-center" style={getStyle}></div>;
+      }
+    }
+    return null;
+  }, [getStyle, isBadge, isCustomBadge, valuePriceBLock.customBadgeUrl]);
+
+  return renderBadge;
 }
 
 export default BadgePreview;

@@ -52,7 +52,7 @@ const Item = (props: IGenericPreviewProps) => {
   const Component = lookupContent[priceBlockElementKey] as FC<IGenericPreviewProps>;
 
   return (
-    <div style={currentStyle as CSSProperties}>
+    <div style={currentStyle as CSSProperties} className="empty:hidden">
       <Component {...props} />
     </div>
   );
