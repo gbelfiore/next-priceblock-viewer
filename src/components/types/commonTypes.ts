@@ -35,6 +35,7 @@ export enum PriceBlockElementKey {
   DISCOUNT = 'discount',
   DISCOUNTED = 'discounted',
   BADGE = 'badge',
+  CUSTOM_BADGE = 'custom_badge',
   UNIT_TYPE = 'unitType',
 }
 
