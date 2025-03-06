@@ -1,7 +1,7 @@
 {
   "name": "next-priceblock-viewer",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "main": "index.ts",
   "module": "index.ts",
