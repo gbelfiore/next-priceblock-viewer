@@ -17,6 +17,7 @@ const lookupContent: Partial<LookupElement> = {
   [PriceBlockElementKey.DISCOUNT]: DiscountPreview,
   [PriceBlockElementKey.DISCOUNTED]: DiscountedPreview,
   [PriceBlockElementKey.BADGE]: BadgePreview,
+  [PriceBlockElementKey.CUSTOM_BADGE]: BadgePreview,
   [PriceBlockElementKey.UNIT_TYPE]: UnitTypePreview,
 };
 
@@ -51,7 +52,7 @@ const Item = (props: IGenericPreviewProps) => {
   const Component = lookupContent[priceBlockElementKey] as FC<IGenericPreviewProps>;
 
   return (
-    <div style={currentStyle as CSSProperties}>
+    <div style={currentStyle as CSSProperties} className="empty:hidden">
       <Component {...props} />
     </div>
   );

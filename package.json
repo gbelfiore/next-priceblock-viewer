@@ -1,17 +1,20 @@
 {
   "name": "next-priceblock-viewer",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "main": "index.ts",
   "module": "index.ts",
   "types": "index.ts",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build_lib": "tsc && BUILD_TYPE=build_lib vite build",
+    "build_amplify": "tsc && BUILD_TYPE=build_amplify vite build",
+    "build": "npm run build_amplify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "prepare": "npm run build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "vite"
   },
   "exports": {
     ".": {
