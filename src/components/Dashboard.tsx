@@ -3,7 +3,6 @@ import '../index.css';
 import DynamicPriceBlock from './DynamicPriceBlock';
 import { useState } from 'react';
 import { Skeleton } from './ui/skeleton';
-import { Button } from './ui/button';
 import { Label } from '@radix-ui/react-label';
 import { PriceBlock } from '../types/price-block';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
@@ -67,20 +66,33 @@ const getPriceBlocks = async (url: string) => {
 };
 
 export function Dashboard() {
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean | undefined>(undefined);
   const [priceBlocks, setPriceBlocks] = useState<PriceBlock[]>([]);
-  const [currentEnv, setCurrentEnv] = useState(0);
   const [currentPriceBlockIndex, setCurrentPriceBlockIndex] = useState<number | undefined>(undefined);
 
-  const [gridSize, setGridSize] = useState(11);
-
-  const customFields = [
-    { id: 'customfield_1', value: 'custom text 1' },
-    { id: 'customfield_2', value: 'custom text 2' },
-    { id: 'customfield_3', value: 'custom text 3' },
-    { id: 'customfield_4', value: 'custom text 4' },
-    { id: 'customfield_5', value: 'custom text 5' },
-  ];
+  const [defaultData, setDefaultData] = useState<{
+    fullPrice: string;
+    discount: string;
+    discounted: string;
+    unitType: string;
+    textCustom: Array<{ id: string; value: string }>;
+    customBadgeUrl: string;
+    gridSize: number;
+  }>({
+    fullPrice: '50.40',
+    discount: '30%',
+    discounted: '44,90',
+    unitType: 'al kg',
+    textCustom: [
+      { id: 'customfield_1', value: 'custom text 1' },
+      { id: 'customfield_2', value: 'custom text 2' },
+      { id: 'customfield_3', value: 'custom text 3' },
+      { id: 'customfield_4', value: 'custom text 4' },
+      { id: 'customfield_5', value: 'custom text 5' },
+    ],
+    customBadgeUrl: 'https://antennisti.roma.it/wp-content/uploads/2019/10/nessun-segnale-tv.jpg',
+    gridSize: 30,
+  });
 
   return (
     <div className="grid h-screen w-full pl-[56px]">
@@ -95,14 +107,22 @@ export function Dashboard() {
               <fieldset className="grid gap-6 rounded-lg border p-4">
                 <legend className="-ml-1 px-1 text-sm font-medium">Settings</legend>
 
-                <div className="grid gap-3">
-                  <Label htmlFor="model">Choose Env</Label>
+                <div className="flex flex-row items-center">
+                  <Label htmlFor="model" className="text-xs w-[30%]">
+                    Enviroment
+                  </Label>
                   <Select
                     disabled={isLoading}
-                    onValueChange={(e) => {
-                      setCurrentEnv(parseInt(e));
-                    }}
-                  >
+                    onValueChange={async (e) => {
+                      const env = enviroments[parseInt(e)];
+                      console.log(env);
+                      if (env?.url) {
+                        setLoading(true);
+                        const res = await getPriceBlocks(env.url);
+                        setPriceBlocks(res);
+                        setLoading(false);
+                      }
+                    }}>
                     <SelectTrigger id="model" className="items-start [&_[data-description]]:hidden">
                       <SelectValue placeholder="Select a Price Block" />
                     </SelectTrigger>
@@ -124,69 +144,180 @@ export function Dashboard() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div>
-                  <Button
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      setLoading(true);
-                      const res = await getPriceBlocks(enviroments[currentEnv]?.url);
-                      setPriceBlocks(res);
-                      setLoading(false);
-                    }}
-                    type="submit"
-                    className=""
-                  >
-                    load env
-                  </Button>
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="model">Current PriceBlock</Label>
-                  <Select
-                    disabled={isLoading || priceBlocks.length === 0}
-                    onValueChange={(e) => {
-                      console.error({ e });
-                      setCurrentPriceBlockIndex(parseInt(e));
-                    }}
-                  >
-                    <SelectTrigger id="model" className="items-start [&_[data-description]]:hidden">
-                      <SelectValue placeholder="Select a Price Block" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {priceBlocks.map((priceBlock, index) => (
-                        <SelectItem value={index.toString()}>
-                          <div className="flex items-start gap-3 text-muted-foreground">
-                            <div className="grid gap-0.5">
-                              <p>
-                                <span className="font-medium text-foreground">{priceBlock.name}</span>
-                              </p>
-                              <p className="text-xs" data-description>
-                                {priceBlock._id}.
-                              </p>
-                            </div>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="temperature">Grid</Label>
-                  <Input
-                    onChange={(e) => {
-                      setGridSize(parseInt(e.target.value));
-                    }}
-                    id="temperature"
-                    defaultValue={18}
-                    value={gridSize}
-                    type="number"
-                    placeholder="18"
-                    min={1}
-                    max={50}
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4"></div>
+
+                {isLoading === false && (
+                  <>
+                    <div className="flex flex-row items-center">
+                      <Label htmlFor="model" className="text-xs w-[30%]">
+                        Price block
+                      </Label>
+                      <Select
+                        disabled={isLoading || priceBlocks.length === 0}
+                        onValueChange={(e) => {
+                          console.error({ e });
+                          setCurrentPriceBlockIndex(parseInt(e));
+                        }}>
+                        <SelectTrigger id="model" className="items-start [&_[data-description]]:hidden">
+                          <SelectValue placeholder="Select a Price Block" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {priceBlocks.map((priceBlock, index) => (
+                            <SelectItem value={index.toString()}>
+                              <div className="flex items-start gap-3 text-muted-foreground">
+                                <div className="grid gap-0.5">
+                                  <p>
+                                    <span className="font-medium text-foreground">{priceBlock.name}</span>
+                                  </p>
+                                  <p className="text-xs" data-description>
+                                    {priceBlock._id}.
+                                  </p>
+                                </div>
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </>
+                )}
               </fieldset>
+
+              {currentPriceBlockIndex && (
+                <fieldset className="grid gap-6 rounded-lg border p-4">
+                  <legend className="-ml-1 px-1 text-sm font-medium">Data for render</legend>
+
+                  <div className="flex flex-row items-center">
+                    <Label htmlFor="model" className="text-xs w-[30%]">
+                      Grid
+                    </Label>
+                    <Input
+                      className="w-[70%]"
+                      onChange={(e) => {
+                        setDefaultData((state) => {
+                          return { ...state, gridSize: parseInt(e.target.value) };
+                        });
+                      }}
+                      defaultValue={18}
+                      value={defaultData.gridSize}
+                      type="number"
+                      placeholder="18"
+                      min={1}
+                      max={50}
+                      disabled={isLoading}
+                    />
+                  </div>
+
+                  <div className="flex flex-row items-center">
+                    <Label htmlFor="model" className="text-xs w-[30%]">
+                      Full price
+                    </Label>
+                    <Input
+                      className="w-[70%]"
+                      onChange={(e) => {
+                        setDefaultData((state) => {
+                          return { ...state, fullPrice: e.target.value };
+                        });
+                      }}
+                      value={defaultData.fullPrice}
+                      type="text"
+                      disabled={isLoading}
+                    />
+                  </div>
+
+                  <div className="flex flex-row items-center">
+                    <Label htmlFor="model" className="text-xs w-[30%]">
+                      Discount
+                    </Label>
+                    <Input
+                      className="w-[70%]"
+                      onChange={(e) => {
+                        setDefaultData((state) => {
+                          return { ...state, discount: e.target.value };
+                        });
+                      }}
+                      value={defaultData.discount}
+                      type="text"
+                      disabled={isLoading}
+                    />
+                  </div>
+
+                  <div className="flex flex-row items-center">
+                    <Label htmlFor="model" className="text-xs w-[30%]">
+                      Discounted
+                    </Label>
+                    <Input
+                      className="w-[70%]"
+                      onChange={(e) => {
+                        setDefaultData((state) => {
+                          return { ...state, discounted: e.target.value };
+                        });
+                      }}
+                      value={defaultData.discounted}
+                      type="text"
+                      disabled={isLoading}
+                    />
+                  </div>
+
+                  <div className="flex flex-row items-center">
+                    <Label htmlFor="model" className="text-xs w-[30%]">
+                      Unit type
+                    </Label>
+                    <Input
+                      className="w-[70%]"
+                      onChange={(e) => {
+                        setDefaultData((state) => {
+                          return { ...state, unitType: e.target.value };
+                        });
+                      }}
+                      value={defaultData.unitType}
+                      type="text"
+                      disabled={isLoading}
+                    />
+                  </div>
+
+                  <div className="flex flex-row items-center">
+                    <Label htmlFor="model" className="text-xs w-[30%]">
+                      Texts custom
+                    </Label>
+                    <textarea
+                      className="w-[70%] border border-solid border-gray-200 rounded p-2"
+                      rows={10}
+                      onChange={(e) => {
+                        setDefaultData((state) => {
+                          return {
+                            ...state,
+                            textCustom: e.target.value.split(',').map((text, idx) => {
+                              return {
+                                id: `customfield_${idx}`,
+                                value: text,
+                              };
+                            }),
+                          };
+                        });
+                      }}
+                      value={defaultData.textCustom.map((txt) => txt.value).join(',')}
+                      disabled={isLoading}
+                      placeholder={'write custom texts separated by commas'}></textarea>
+                  </div>
+
+                  <div className="flex flex-row items-center">
+                    <Label htmlFor="model" className="text-xs w-[30%]">
+                      Custom badge url
+                    </Label>
+                    <Input
+                      className="w-[70%]"
+                      onChange={(e) => {
+                        setDefaultData((state) => {
+                          return { ...state, customBadgeUrl: e.target.value };
+                        });
+                      }}
+                      value={defaultData.customBadgeUrl}
+                      type="text"
+                      disabled={isLoading}
+                    />
+                  </div>
+                </fieldset>
+              )}
             </form>
           </div>
           <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
@@ -207,13 +338,14 @@ export function Dashboard() {
                   priceBlockKey="test_price_block"
                   key={currentPriceBlockIndex}
                   priceBlock={priceBlocks[currentPriceBlockIndex]}
-                  gridSize={gridSize}
+                  gridSize={defaultData.gridSize}
                   valuePriceBLock={{
-                    fullPrice: '50.40',
-                    discount: '30%',
-                    discounted: '44,90',
-                    unitType: 'al kg',
-                    textCustom: customFields,
+                    fullPrice: defaultData.fullPrice,
+                    discount: defaultData.discount,
+                    discounted: defaultData.discounted,
+                    unitType: defaultData.unitType,
+                    textCustom: defaultData.textCustom,
+                    customBadgeUrl: defaultData.customBadgeUrl,
                   }}
                 />
               ) : null}
@@ -221,8 +353,7 @@ export function Dashboard() {
 
             <form
               className="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring"
-              x-chunk="dashboard-03-chunk-1"
-            >
+              x-chunk="dashboard-03-chunk-1">
               <Label htmlFor="message" className="sr-only">
                 Message
               </Label>
